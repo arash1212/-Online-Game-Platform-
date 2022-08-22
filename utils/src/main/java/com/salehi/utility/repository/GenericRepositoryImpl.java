@@ -72,7 +72,7 @@ public class GenericRepositoryImpl<T extends IEntity> implements GenericReposito
         criteriaQuery.select(root).where(criteriaBuilder.like(root.get(fieldName), value));
 
         TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
-        return query.getResultList().size() > 0 ? query.getSingleResult() : null;
+        return query.getResultList().stream().findFirst().orElse(null);
     }
 
     @Override

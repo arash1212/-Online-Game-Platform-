@@ -4,10 +4,10 @@ import com.salehi.utility.constant.RelationalDBConstant;
 import com.salehi.utility.interfaces.IEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -15,7 +15,6 @@ import java.time.ZonedDateTime;
 @Table(name = "USER_AUTHORITY", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "USER_AUTHORITY_IDX_ID", columnList = "ID")
 })
-@EntityListeners(AuditingEntityListener.class)
 public class AuthorityEntity implements IEntity {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +27,7 @@ public class AuthorityEntity implements IEntity {
     @Basic
     @Column(name = "CREATION_TIME", nullable = false)
     private ZonedDateTime creationTime;
-    @Column(name = "AUTHORITY", unique = true, nullable = false, length = 300)
+    @Column(name = "AUTHORITY", unique = true, nullable = false, length = 100)
     private String authority;
     //TODO fix
 //    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "authorities")
@@ -37,5 +36,27 @@ public class AuthorityEntity implements IEntity {
     @PrePersist
     private void setCreationTime() {
         this.creationTime = ZonedDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuthorityEntity that = (AuthorityEntity) o;
+        return id.equals(that.id) && creationTime.equals(that.creationTime) && authority.equals(that.authority);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, creationTime, authority);
+    }
+
+    @Override
+    public String toString() {
+        return "AuthorityEntity{" +
+                "id=" + id +
+                ", creationTime=" + creationTime +
+                ", authority='" + authority + '\'' +
+                '}';
     }
 }

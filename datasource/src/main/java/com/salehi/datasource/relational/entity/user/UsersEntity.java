@@ -5,10 +5,10 @@ import com.salehi.utility.constant.RelationalDBConstant;
 import com.salehi.utility.interfaces.IEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -17,7 +17,6 @@ import java.util.Set;
 @Table(name = "USERS", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "USERS_IDX_ID", columnList = "ID")
 })
-@EntityListeners(AuditingEntityListener.class)
 public class UsersEntity implements IEntity {
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +32,9 @@ public class UsersEntity implements IEntity {
     @Basic
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
     private String email;
+    @Basic
+    @Column(name = "MOBILE", nullable = false, unique = true, length = 100)
+    private String mobile;
     @Basic
     @Column(name = "PASSWORD", nullable = false, length = 100)
     private String password;
@@ -72,5 +74,37 @@ public class UsersEntity implements IEntity {
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.creationTime = ZonedDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UsersEntity entity = (UsersEntity) o;
+        return id.equals(entity.id) && creationTime.equals(entity.creationTime) && email.equals(entity.email) && mobile.equals(entity.mobile);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, creationTime, email, password, deleted, accountName, accountNonExpired,
+                accountNonLocked, credentialsNonExpired, enabled, authorities);
+    }
+
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "id=" + id +
+                ", creationTime=" + creationTime +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", password='" + password + '\'' +
+                ", deleted=" + deleted +
+                ", accountName='" + accountName + '\'' +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", enabled=" + enabled +
+                ", authorities=" + authorities +
+                '}';
     }
 }

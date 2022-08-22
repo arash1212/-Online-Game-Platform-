@@ -1,6 +1,7 @@
 package com.salehi.utility.constant;
 
 public interface RestControllerConstant {
-     String ADM = "/adm";
-     String PUB = "/pub";
+    String BASE_URL = "/api";
+    String ADM = BASE_URL + "/adm";
+    String PUB = BASE_URL + "/pub";
 }
