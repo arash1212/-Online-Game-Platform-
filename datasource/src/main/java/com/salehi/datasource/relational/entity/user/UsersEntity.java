@@ -1,0 +1,76 @@
+package com.salehi.datasource.relational.entity.user;
+
+import com.salehi.datasource.relational.entity.security.AuthorityEntity;
+import com.salehi.utility.constant.RelationalDBConstant;
+import com.salehi.utility.interfaces.IEntity;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.ZonedDateTime;
+import java.util.Set;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "USERS", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
+        @Index(name = "USERS_IDX_ID", columnList = "ID")
+})
+@EntityListeners(AuditingEntityListener.class)
+public class UsersEntity implements IEntity {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @SequenceGenerator(name = "users_sequence", sequenceName = "USERS_SEQUENCE", schema = RelationalDBConstant.DEFAULT_SCHEMA,
+            initialValue = 100, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
+    @Column(name = "ID")
+    private Long id;
+    @Basic
+    @Column(name = "CREATION_TIME", nullable = false)
+    private ZonedDateTime creationTime;
+    @Basic
+    @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
+    private String email;
+    @Basic
+    @Column(name = "PASSWORD", nullable = false, length = 100)
+    private String password;
+    @Basic
+    @Column(name = "DELETED", nullable = false)
+    private boolean deleted;
+    @Basic
+    @Column(name = "ACCOUNT_NAME", nullable = false, unique = true, length = 150)
+    private String accountName;
+    @Basic
+    @Column(name = "ACCOUNT_NON_EXPIRED", nullable = false)
+    private boolean accountNonExpired;
+    @Basic
+    @Column(name = "ACCOUNT_NON_LOCKED", nullable = false)
+    private boolean accountNonLocked;
+    @Basic
+    @Column(name = "CREDENTIALS_NON_EXPIRED", nullable = false)
+    private boolean credentialsNonExpired;
+    @Basic
+    @Column(name = "ENABLED", nullable = false)
+    private boolean enabled;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "USERS_AUTHORITY", schema = RelationalDBConstant.DEFAULT_SCHEMA,
+            joinColumns = @JoinColumn(name = "USERS_ID_FK", referencedColumnName = "ID", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID_FK", referencedColumnName = "ID", nullable = false),
+            indexes = {
+                    @Index(name = "USER_AUTHORITY_IDX_USER", columnList = "USERS_ID_FK"),
+                    @Index(name = "USER_AUTHORITY_IDX_AUTHORITY", columnList = "AUTHORITY_ID_FK")
+            }
+    )
+    private Set<AuthorityEntity> authorities;
+
+    @PrePersist
+    private void prePersist() {
+        this.deleted = false;
+        this.credentialsNonExpired = true;
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.creationTime = ZonedDateTime.now();
+    }
+}
