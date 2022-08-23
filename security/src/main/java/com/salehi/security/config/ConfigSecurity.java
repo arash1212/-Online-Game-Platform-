@@ -1,7 +1,8 @@
 package com.salehi.security.config;
 
 import com.salehi.security.config.filter.JwtAuthenticationProcessingFilter;
-import com.salehi.security.config.provider.JwtAuthenticationProvider;
+import com.salehi.security.config.handler.JwtAuthenticationFailureHandler;
+import com.salehi.security.config.handler.JwtAuthenticationSuccessHandler;
 import com.salehi.utility.constant.RestControllerConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,12 +20,18 @@ public class ConfigSecurity {
 
     @Autowired
     private AuthenticationConfiguration configuration;
+    @Autowired
+    private JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
+    @Autowired
+    private JwtAuthenticationFailureHandler jwtAuthenticationFailureHandler;
 
     @Bean
     public JwtAuthenticationProcessingFilter jwtFilter() throws Exception {
-        JwtAuthenticationProcessingFilter filter = new JwtAuthenticationProcessingFilter(new AntPathRequestMatcher("/api/adm/***"));
-        filter.setAuthenticationManager(this.authenticationManager());
-        return filter;
+        JwtAuthenticationProcessingFilter jwtFilter = new JwtAuthenticationProcessingFilter(new AntPathRequestMatcher("/api/adm/***"));
+        jwtFilter.setAuthenticationManager(this.authenticationManager());
+        jwtFilter.setAuthenticationSuccessHandler(this.jwtAuthenticationSuccessHandler);
+        jwtFilter.setAuthenticationFailureHandler(this.jwtAuthenticationFailureHandler);
+        return jwtFilter;
     }
 
     //TODO
@@ -33,6 +40,7 @@ public class ConfigSecurity {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(RestControllerConstant.PUB + "/**").permitAll().and()
                 .authorizeRequests().antMatchers(RestControllerConstant.ADM + "/**").authenticated().and()
+                .authorizeRequests().antMatchers(RestControllerConstant.SWAGGER_DOC + "/**").permitAll().and()
                 .authorizeRequests().anyRequest().authenticated();
 
         http.addFilterBefore(this.jwtFilter(), UsernamePasswordAuthenticationFilter.class);

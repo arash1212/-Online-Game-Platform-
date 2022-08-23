@@ -5,11 +5,11 @@ import com.salehi.user.model.user.dto.UsersInput;
 import com.salehi.user.model.user.dto.UsersOutput;
 import com.salehi.user.model.user.mapper.UsersMapper;
 import com.salehi.user.model.user.repository.UsersRepository;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ public class UsersService {
     public UsersOutput findById(Long id) {
         UsersEntity entity = usersRepository.getById(id);
         if (entity == null)
-            throw new EntityNotFoundException("User :" + id);
+            throw new OpenApiResourceNotFoundException("User ID :" + id);
 
         return usersMapper.mapEntityToOutput(entity);
     }
@@ -51,11 +51,18 @@ public class UsersService {
 
     public void update(Long id, UsersInput input) {
         UsersEntity entity = usersMapper.mapInputToEntity(input);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("User ID : " + id);
+
         entity.setId(id);
         this.usersRepository.update(entity);
     }
 
     public void delete(Long id) {
+        UsersEntity entity = usersRepository.getById(id);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("User ID : " + id);
+
         this.usersRepository.delete(id);
     }
 

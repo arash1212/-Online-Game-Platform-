@@ -33,7 +33,7 @@ public class UsersEntity implements IEntity {
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
     private String email;
     @Basic
-    @Column(name = "MOBILE", nullable = false, unique = true, length = 100)
+    @Column(name = "MOBILE", nullable = false, unique = true, length = 30)
     private String mobile;
     @Basic
     @Column(name = "PASSWORD", nullable = false, length = 100)

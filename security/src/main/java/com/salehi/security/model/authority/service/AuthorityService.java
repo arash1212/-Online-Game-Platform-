@@ -5,11 +5,11 @@ import com.salehi.security.model.authority.dto.AuthorityInput;
 import com.salehi.security.model.authority.dto.AuthorityOutput;
 import com.salehi.security.model.authority.mapper.AuthorityMapper;
 import com.salehi.security.model.authority.repository.AuthorityRepository;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,9 +28,8 @@ public class AuthorityService {
 
     public AuthorityOutput findById(Long id) {
         AuthorityEntity entity = authorityRepository.getById(id);
-        if (entity == null) {
-            throw new EntityNotFoundException("User :" + id);
-        }
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("Authority ID : " + id);
 
         return authorityMapper.mapEntityToOutput(entity);
     }
@@ -50,6 +49,9 @@ public class AuthorityService {
 
     public void update(Long id, AuthorityInput input) {
         AuthorityEntity entity = authorityMapper.mapInputToEntity(input);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("Authority ID : " + id);
+
         entity.setId(id);
         this.authorityRepository.update(entity);
     }
