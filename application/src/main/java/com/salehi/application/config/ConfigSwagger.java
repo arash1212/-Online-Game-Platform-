@@ -5,6 +5,8 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,14 +18,19 @@ public class ConfigSwagger {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(this.info())
-                .components(new Components());
-
+                .components(new Components()
+                        .addSecuritySchemes("Bearer", new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .in(SecurityScheme.In.HEADER)
+                                .name("Bearer")
+                                .bearerFormat("JWT")))
+                .addSecurityItem(new SecurityRequirement().addList("Bearer"));
     }
 
     @Bean
     public GroupedOpenApi apiPublic() {
         return GroupedOpenApi.builder()
-                .group("public")
+                .group("Public")
                 .pathsToMatch(RestControllerConstant.PUB + "/**")
                 .build();
     }
@@ -31,7 +38,7 @@ public class ConfigSwagger {
     @Bean
     public GroupedOpenApi apiAdmin() {
         return GroupedOpenApi.builder()
-                .group("admin")
+                .group("Admin")
                 .pathsToMatch(RestControllerConstant.ADM + "/**")
                 .build();
     }
@@ -51,5 +58,4 @@ public class ConfigSwagger {
         info.setTitle("Store Api Docs");
         return info;
     }
-
 }

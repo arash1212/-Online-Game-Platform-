@@ -4,6 +4,7 @@ import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.security.authentication.service.UsersDetailService;
 import com.salehi.security.config.token.JwtAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -18,6 +19,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsersEntity entity = this.usersDetailService.extractJwtUser(authentication.getPrincipal().toString());
+        if(entity == null)
+            throw new AccessDeniedException("User Not Found");
+
         return new JwtAuthenticationToken(authentication.getPrincipal().toString());
     }
 
