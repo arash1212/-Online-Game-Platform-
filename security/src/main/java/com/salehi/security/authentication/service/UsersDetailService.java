@@ -2,16 +2,15 @@ package com.salehi.security.authentication.service;
 
 import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.user.model.user.repository.UsersRepository;
-import com.salehi.utility.security.JwtUtils;
+import com.salehi.utility.utils.interfaces.IJwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersDetailService {
     @Autowired
-    private JwtUtils jwtUtils;
+    private IJwtUtils jwtUtils;
     @Autowired
     private UsersRepository usersRepository;
 

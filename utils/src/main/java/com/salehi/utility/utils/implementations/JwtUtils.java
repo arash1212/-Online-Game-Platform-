@@ -1,5 +1,6 @@
-package com.salehi.utility.security;
+package com.salehi.utility.utils.implementations;
 
+import com.salehi.utility.utils.interfaces.IJwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,12 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtUtils {
+public class JwtUtils implements IJwtUtils {
 
     @Value("${JwtSecret}")
     private String JWT_SECRET;
     private final int TOKEN_EXPIRATION = 60 * 60 * 60;
 
+    //TODO
     public String generateJwt(String email) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
@@ -32,5 +34,6 @@ public class JwtUtils {
         return claims.get("email").toString();
     }
 
-    //TODO jwt validation
+    @Override
+    public void validate(String token){}
 }

@@ -9,6 +9,7 @@
         <module>security</module>
         <module>user</module>
         <module>datasource</module>
+        <module>webservice</module>
         <module>utils</module>
     </modules>
 

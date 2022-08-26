@@ -4,7 +4,7 @@ import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.security.authentication.dto.jwt.JwtInput;
 import com.salehi.security.authentication.dto.jwt.JwtOutput;
 import com.salehi.user.model.user.repository.UsersRepository;
-import com.salehi.utility.security.JwtUtils;
+import com.salehi.utility.utils.interfaces.IJwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     @Autowired
-    private JwtUtils jwtUtils;
+    private IJwtUtils jwtUtils;
     @Autowired
     private UsersRepository usersRepository;
 

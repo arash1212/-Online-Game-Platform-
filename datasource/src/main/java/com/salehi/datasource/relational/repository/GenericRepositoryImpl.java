@@ -1,6 +1,6 @@
-package com.salehi.utility.repository;
+package com.salehi.datasource.relational.repository;
 
-import com.salehi.utility.interfaces.IEntity;
+import com.salehi.datasource.relational.interfaces.IEntity;
 
 import javax.el.MethodNotFoundException;
 import javax.persistence.EntityManager;

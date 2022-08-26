@@ -1,8 +1,8 @@
 package com.salehi.datasource.relational.entity.user;
 
 import com.salehi.datasource.relational.entity.security.AuthorityEntity;
+import com.salehi.datasource.relational.interfaces.IEntity;
 import com.salehi.utility.constant.RelationalDBConstant;
-import com.salehi.utility.interfaces.IEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,6 +56,13 @@ public class UsersEntity implements IEntity {
     @Basic
     @Column(name = "ENABLED", nullable = false)
     private boolean enabled;
+    @Basic
+    @Column(name = "EMAIL_CONFIRMATION_DATE")
+    private ZonedDateTime emailConfirmationDate;
+    @Basic
+    @Column(name = "MOBILE_CONFIRMATION_DATE")
+    private ZonedDateTime mobileConfirmationDate;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "USERS_AUTHORITY", schema = RelationalDBConstant.DEFAULT_SCHEMA,
             joinColumns = @JoinColumn(name = "USERS_ID_FK", referencedColumnName = "ID", nullable = false),
@@ -74,6 +81,8 @@ public class UsersEntity implements IEntity {
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.creationTime = ZonedDateTime.now();
+        this.emailConfirmationDate = null;
+        this.mobileConfirmationDate = null;
     }
 
     @Override
@@ -104,6 +113,8 @@ public class UsersEntity implements IEntity {
                 ", accountNonLocked=" + accountNonLocked +
                 ", credentialsNonExpired=" + credentialsNonExpired +
                 ", enabled=" + enabled +
+                ", emailConfirmationDate=" + emailConfirmationDate +
+                ", mobileConfirmationDate=" + mobileConfirmationDate +
                 ", authorities=" + authorities +
                 '}';
     }

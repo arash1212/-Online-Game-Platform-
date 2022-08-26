@@ -1,7 +1,7 @@
 package com.salehi.datasource.relational.entity.security;
 
 import com.salehi.utility.constant.RelationalDBConstant;
-import com.salehi.utility.interfaces.IEntity;
+import com.salehi.datasource.relational.interfaces.IEntity;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -20,7 +20,7 @@ public class ConfigSwagger {
                 .info(this.info())
                 .components(new Components()
                         .addSecuritySchemes("Bearer", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
+                                .type(SecurityScheme.Type.APIKEY)
                                 .in(SecurityScheme.In.HEADER)
                                 .name("Bearer")
                                 .bearerFormat("JWT")))

@@ -1,7 +1,7 @@
 package com.salehi.user.model.user.repository;
 
 import com.salehi.datasource.relational.entity.user.UsersEntity;
-import com.salehi.utility.repository.GenericRepositoryImpl;
+import com.salehi.datasource.relational.repository.GenericRepositoryImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
