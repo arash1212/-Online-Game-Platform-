@@ -1,6 +1,8 @@
 package com.salehi.webservice.messaging.parsgreen.controller;
 
 import com.salehi.utility.constant.RestControllerConstant;
+import com.salehi.webservice.messaging.interfaces.dto.sms.SmsInput;
+import com.salehi.webservice.messaging.interfaces.service.IMessageService;
 import com.salehi.webservice.messaging.parsgreen.dto.ParsGreenSmsInput;
 import com.salehi.webservice.messaging.parsgreen.service.ParsGreenMessageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ParsGreenMessageController {
 
     @Autowired
-    private ParsGreenMessageService messageService;
+    private IMessageService messageService;
 
     @Operation(summary = "Send Sms")
     @ApiResponses(value = {
@@ -38,16 +40,16 @@ public class ParsGreenMessageController {
                     content = @Content(
                             schema = @Schema(
                                     example = "{\n" +
-                                            "  \"from\": \"1000001000002\",\n" +
-                                            "  \"to\": \"09011233214\",\n" +
-                                            "  \"messageBody\": \"Test Message\",\n" +
-                                            "  \"token\": \"token...\",\n" +
-                                            "  \"serviceUrl\": \"https://sms.parsgreen.ir/UrlService/sendSMS.ashx\"\n" +
+                                            "  \"to\": [\n" +
+                                            "    \"09101234321\"\n" +
+                                            "  ],\n" +
+                                            "  \"messageBody\": \"Test Message Body\",\n" +
+                                            "  \"serviceToken\": \"token..\"\n" +
                                             "}"
                             )
                     )
             )
-            @RequestBody ParsGreenSmsInput input, BindingResult bindingResult) {
+            @RequestBody SmsInput input, BindingResult bindingResult) {
         return ResponseEntity.ok(this.messageService.sendSms(input));
     }
 

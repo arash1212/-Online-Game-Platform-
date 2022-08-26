@@ -1,8 +1,8 @@
-package com.salehi.security.authentication.service;
+package com.salehi.security.moduleSpecific.authentication.service;
 
 import com.salehi.datasource.relational.entity.user.UsersEntity;
-import com.salehi.security.authentication.dto.jwt.JwtInput;
-import com.salehi.security.authentication.dto.jwt.JwtOutput;
+import com.salehi.security.moduleSpecific.authentication.dto.jwt.JwtInput;
+import com.salehi.security.moduleSpecific.authentication.dto.jwt.JwtOutput;
 import com.salehi.user.model.user.repository.UsersRepository;
 import com.salehi.utility.utils.interfaces.IJwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;

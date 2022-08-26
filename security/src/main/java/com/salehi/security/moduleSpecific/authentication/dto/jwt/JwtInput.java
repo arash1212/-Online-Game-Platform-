@@ -1,4 +1,4 @@
-package com.salehi.security.authentication.dto.jwt;
+package com.salehi.security.moduleSpecific.authentication.dto.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

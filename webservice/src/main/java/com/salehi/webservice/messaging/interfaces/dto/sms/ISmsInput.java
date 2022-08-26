@@ -1,40 +1,21 @@
 package com.salehi.webservice.messaging.interfaces.dto.sms;
 
+import java.util.List;
+
 public interface ISmsInput {
+    void setTo(List<String> mobiles);
 
-//    void setServiceUrl(String url);
+    List<String> getTo();
+
+//    void setFrom(String from);
 //
-//    String getServiceUrl();
-//
-//    void setMobiles(List<String> mobiles);
-//
-//    List<String> getMobiles();
-//
-//    void setSendNumber(String sendNumber);
-//
-//    String getSendNumber();
-//
-//    void setMessageBody(String messageBody);
-//
-//    String getMessageBody();
-
-    void setServiceUrl(String url);
-
-    String getServiceUrl();
-
-    void setFrom(String from);
-
-    String getFrom();
-
-    void setTo(String mobile);
-
-    String getTo();
-
-    String getToken();
-
-    void setToken(String token);
+//    String getFrom();
 
     void setMessageBody(String messageBody);
 
     String getMessageBody();
+
+    String getServiceToken();
+
+    void setServiceToken(String token);
 }

@@ -1,7 +1,7 @@
 package com.salehi.security.config.provider;
 
 import com.salehi.datasource.relational.entity.user.UsersEntity;
-import com.salehi.security.authentication.service.UsersDetailService;
+import com.salehi.security.moduleSpecific.authentication.service.UsersDetailService;
 import com.salehi.security.config.token.JwtAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;

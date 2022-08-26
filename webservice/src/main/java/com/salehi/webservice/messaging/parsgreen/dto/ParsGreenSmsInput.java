@@ -1,34 +1,26 @@
 package com.salehi.webservice.messaging.parsgreen.dto;
 
 import com.salehi.webservice.messaging.interfaces.dto.sms.ISmsInput;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
-public class ParsGreenSmsInput implements ISmsInput {
-//    @NotBlank
-//    private String SmsBody;
-//    @Size(min = 1)
-//    private List<String> Mobiles;
-//    @NotBlank
-//    private String SmsNumber;
-//    @NotBlank
-//    private String serviceUrl;
-//    @NotBlank
-//    private String serviceToken;
-
+@AllArgsConstructor
+public class ParsGreenSmsInput {
     @NotBlank
-    private String from;
+    private String SmsBody;
+    @Size(min = 1)
+    private List<String> Mobiles;
     @NotBlank
-    private String to;
-    @NotBlank
-    private String messageBody;
-    @NotBlank
-    private String token;
+    private String SmsNumber;
     @NotBlank
     private String serviceUrl;
-
+    @NotBlank
+    private String serviceToken;
 }

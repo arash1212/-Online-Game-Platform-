@@ -1,8 +1,8 @@
-package com.salehi.security.authentication.controller;
+package com.salehi.security.moduleSpecific.authentication.controller;
 
-import com.salehi.security.authentication.dto.jwt.JwtInput;
-import com.salehi.security.authentication.dto.jwt.JwtOutput;
-import com.salehi.security.authentication.service.AuthService;
+import com.salehi.security.moduleSpecific.authentication.dto.jwt.JwtInput;
+import com.salehi.security.moduleSpecific.authentication.dto.jwt.JwtOutput;
+import com.salehi.security.moduleSpecific.authentication.service.AuthService;
 import com.salehi.utility.constant.RestControllerConstant;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

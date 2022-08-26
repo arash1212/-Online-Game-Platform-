@@ -1,4 +1,4 @@
-package com.salehi.security.authentication.service;
+package com.salehi.security.moduleSpecific.authentication.service;
 
 import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.user.model.user.repository.UsersRepository;
