@@ -1,6 +1,5 @@
 package com.salehi.webservice.messaging.parsgreen.dto;
 
-import com.salehi.webservice.messaging.interfaces.dto.sms.ISmsInput;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
