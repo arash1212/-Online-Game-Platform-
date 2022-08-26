@@ -76,6 +76,28 @@ public class GenericRepositoryImpl<T extends IEntity> implements GenericReposito
     }
 
     @Override
+    public List<T> getAllByFieldName(String fieldName, String value) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.getEntityClass());
+        Root<T> root = criteriaQuery.from(this.getEntityClass());
+        criteriaQuery.select(root).where(criteriaBuilder.like(root.get(fieldName), value));
+
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<T> getAllByFieldName(String fieldName, Object value) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.getEntityClass());
+        Root<T> root = criteriaQuery.from(this.getEntityClass());
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(fieldName), value));
+
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
+    @Override
     public boolean existByFieldName(String fieldName, String value) {
         return this.getByFieldName(fieldName, value) != null;
     }

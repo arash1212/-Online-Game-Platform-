@@ -21,6 +21,9 @@ public interface GenericRepository<T extends IEntity> {
     List<Integer> save(List<T> ts);
 
     T getByFieldName(String fieldName, String value);
+    List<T> getAllByFieldName(String fieldName, String value);
+
+    List<T> getAllByFieldName(String fieldName, Object value);
 
     boolean existByFieldName(String fieldName, String value);
 }

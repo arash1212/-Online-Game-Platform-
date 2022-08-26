@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class ParsGreenMessageService implements IMessageService {
+public class ParsGreenMessageService {
+
+    //TODO MessagingProvideEntity..
     public String sendSms(ISmsInput input) {
         String serviceUrl = "https://sms.parsgreen.ir/Apiv2/Message/SendSms";
         String tokenHeaderName = "Authorization";

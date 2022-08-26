@@ -1,10 +1,8 @@
-package com.salehi.webservice.messaging.parsgreen.controller;
+package com.salehi.messaging;
 
 import com.salehi.utility.constant.RestControllerConstant;
 import com.salehi.webservice.messaging.interfaces.dto.sms.SmsInput;
 import com.salehi.webservice.messaging.interfaces.service.IMessageService;
-import com.salehi.webservice.messaging.parsgreen.dto.ParsGreenSmsInput;
-import com.salehi.webservice.messaging.parsgreen.service.ParsGreenMessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Adm-Pars-Green-Messaging")
+@Tag(name = "Adm-Messaging")
 @Validated
 @RestController
-@RequestMapping(path = RestControllerConstant.ADM + "/messaging/pars-green")
-public class ParsGreenMessageController {
+@RequestMapping(path = RestControllerConstant.ADM + "/messaging")
+public class MessagingController {
 
     @Autowired
-    private IMessageService messageService;
+    private IMessageProviderManager providerManager;
 
     @Operation(summary = "Send Sms")
     @ApiResponses(value = {
@@ -50,7 +48,7 @@ public class ParsGreenMessageController {
                     )
             )
             @RequestBody SmsInput input, BindingResult bindingResult) {
-        return ResponseEntity.ok(this.messageService.sendSms(input));
+        return ResponseEntity.ok(this.providerManager.sendSms(input));
     }
 
 }
