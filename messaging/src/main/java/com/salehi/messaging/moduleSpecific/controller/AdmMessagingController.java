@@ -1,8 +1,8 @@
-package com.salehi.messaging;
+package com.salehi.messaging.moduleSpecific.controller;
 
+import com.salehi.messaging.moduleSpecific.providerManager.IMessagingProviderManager;
 import com.salehi.utility.constant.RestControllerConstant;
-import com.salehi.webservice.messaging.interfaces.dto.sms.SmsInput;
-import com.salehi.webservice.messaging.interfaces.service.IMessageService;
+import com.salehi.messaging.moduleSpecific.dto.sms.MessagingSmsInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping(path = RestControllerConstant.ADM + "/messaging")
-public class MessagingController {
+public class AdmMessagingController {
 
     @Autowired
-    private IMessageProviderManager providerManager;
+    private IMessagingProviderManager providerManager;
 
     @Operation(summary = "Send Sms")
     @ApiResponses(value = {
@@ -39,15 +39,14 @@ public class MessagingController {
                             schema = @Schema(
                                     example = "{\n" +
                                             "  \"to\": [\n" +
-                                            "    \"09101234321\"\n" +
+                                            "    \"09011234321\"\n" +
                                             "  ],\n" +
-                                            "  \"messageBody\": \"Test Message Body\",\n" +
-                                            "  \"serviceToken\": \"token..\"\n" +
+                                            "  \"messageBody\": \"Test Message Body\"\n" +
                                             "}"
                             )
                     )
             )
-            @RequestBody SmsInput input, BindingResult bindingResult) {
+            @RequestBody MessagingSmsInput input, BindingResult bindingResult) {
         return ResponseEntity.ok(this.providerManager.sendSms(input));
     }
 

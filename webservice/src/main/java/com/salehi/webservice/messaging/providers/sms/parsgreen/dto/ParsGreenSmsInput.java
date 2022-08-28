@@ -1,4 +1,4 @@
-package com.salehi.webservice.messaging.parsgreen.dto;
+package com.salehi.webservice.messaging.providers.sms.parsgreen.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +22,6 @@ public class ParsGreenSmsInput {
     private String serviceUrl;
     @NotBlank
     private String serviceToken;
+    @NotBlank
+    private String tokenHeaderName;
 }

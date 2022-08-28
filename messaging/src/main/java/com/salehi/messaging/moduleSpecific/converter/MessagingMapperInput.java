@@ -1,4 +1,4 @@
-package com.salehi.webservice.messaging.interfaces.dto.sms;
+package com.salehi.messaging.moduleSpecific.converter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,15 +8,15 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SmsInput implements ISmsInput {
-//    @NotBlank
-//    private String from;
+public class MessagingMapperInput {
     @NotBlank
     private List<String> to;
     @NotBlank
     private String messageBody;
-
-    //TODO hard code beshe ya az database begire
     @NotBlank
     private String serviceToken;
+    @NotBlank
+    private String serviceURL;
+    @NotBlank
+    private String headerName;
 }

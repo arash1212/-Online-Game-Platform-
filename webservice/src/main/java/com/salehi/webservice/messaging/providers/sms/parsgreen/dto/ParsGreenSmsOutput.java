@@ -1,4 +1,4 @@
-package com.salehi.webservice.messaging.parsgreen.dto;
+package com.salehi.webservice.messaging.providers.sms.parsgreen.dto;
 
 import lombok.Getter;
 import lombok.Setter;
