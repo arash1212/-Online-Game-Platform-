@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.salehi</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>datasource</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

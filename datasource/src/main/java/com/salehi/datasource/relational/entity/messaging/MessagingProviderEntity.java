@@ -1,7 +1,7 @@
 package com.salehi.datasource.relational.entity.messaging;
 
-import com.salehi.datasource.relational.enums.messaging.MessageProviderType;
-import com.salehi.datasource.relational.enums.messaging.MessageType;
+import com.salehi.datasource.relational.enums.messaging.MessageProviderEnum;
+import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import com.salehi.datasource.relational.interfaces.IEntity;
 import com.salehi.utility.constant.RelationalDBConstant;
 import lombok.Getter;
@@ -49,10 +49,10 @@ public class MessagingProviderEntity implements IEntity {
     private String serviceToken;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "SUPPORTED_TYPE", nullable = false)
-    private MessageType supportedType;
+    private MessageTypeEnum supportedType;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "PROVIDER_TYPE", nullable = false)
-    private MessageProviderType providerType;
+    @Column(name = "PROVIDER", nullable = false)
+    private MessageProviderEnum provider;
 
     @PrePersist
     private void setCreationTime() {
@@ -60,17 +60,18 @@ public class MessagingProviderEntity implements IEntity {
         this.active = true;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MessagingProviderEntity that = (MessagingProviderEntity) o;
-        return active == that.active && id.equals(that.id) && title.equals(that.title) && creationTime.equals(that.creationTime) && description.equals(that.description) && serviceUrl.equals(that.serviceUrl) && tokenHeaderName.equals(that.tokenHeaderName) && serviceToken.equals(that.serviceToken) && supportedType == that.supportedType && providerType == that.providerType;
+        return active == that.active && id.equals(that.id) && title.equals(that.title) && creationTime.equals(that.creationTime) && serviceUrl.equals(that.serviceUrl) && tokenHeaderName.equals(that.tokenHeaderName) && serviceToken.equals(that.serviceToken) && supportedType == that.supportedType && provider == that.provider;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, active, creationTime, description, serviceUrl, tokenHeaderName, serviceToken, supportedType, providerType);
+        return Objects.hash(id, title, active, creationTime, serviceUrl, tokenHeaderName, serviceToken, supportedType, provider);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class MessagingProviderEntity implements IEntity {
                 ", tokenHeaderName='" + tokenHeaderName + '\'' +
                 ", serviceToken='" + serviceToken + '\'' +
                 ", supportedType=" + supportedType +
-                ", providerType=" + providerType +
+                ", provider=" + provider +
                 '}';
     }
 }

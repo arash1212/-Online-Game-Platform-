@@ -3,6 +3,7 @@ package com.salehi.datasource.relational.repository;
 import com.salehi.datasource.relational.interfaces.IEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GenericRepository<T extends IEntity> {
 
@@ -21,9 +22,14 @@ public interface GenericRepository<T extends IEntity> {
     List<Integer> save(List<T> ts);
 
     T getByFieldName(String fieldName, String value);
+
+    public T getByFieldName(String fieldName, Object value);
+
     List<T> getAllByFieldName(String fieldName, String value);
 
     List<T> getAllByFieldName(String fieldName, Object value);
+
+    public List<T> getAllByQuery(String queryString, Map<String, Object> params);
 
     boolean existByFieldName(String fieldName, String value);
 }

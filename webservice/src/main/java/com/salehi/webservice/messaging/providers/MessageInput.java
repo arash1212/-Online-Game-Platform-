@@ -1,4 +1,4 @@
-package com.salehi.messaging.moduleSpecific.converter;
+package com.salehi.webservice.messaging.providers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MessagingMapperInput {
+public class MessageInput {
     @NotBlank
     private List<String> to;
     @NotBlank

@@ -65,7 +65,7 @@ public class AdmMessagingProviderController {
                             "  \"tokenHeaderName\": \"Authorization\",\n" +
                             "  \"serviceToken\": \"token..\",\n" +
                             "  \"supportedType\": \"SMS\",\n" +
-                            "  \"providerType\": \"PARS_GREEN\"\n" +
+                            "  \"provider\": \"PARS_GREEN\"\n" +
                             "}"))
             )
             @RequestBody MessagingProviderInput input, BindingResult result) {
@@ -87,7 +87,7 @@ public class AdmMessagingProviderController {
                                        "  \"tokenHeaderName\": \"Authorization\",\n" +
                                        "  \"serviceToken\": \"token..\",\n" +
                                        "  \"supportedType\": \"SMS\",\n" +
-                                       "  \"providerType\": \"PARS_GREEN\"\n" +
+                                       "  \"provider\": \"PARS_GREEN\"\n" +
                                        "}"))
                        )
                        @RequestBody MessagingProviderInput input, BindingResult result) {

@@ -1,5 +1,5 @@
 package com.salehi.datasource.relational.enums.messaging;
 
-public enum MessageType {
+public enum MessageTypeEnum {
     SMS,EMAIl;
 }

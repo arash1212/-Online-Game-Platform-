@@ -9,8 +9,8 @@
         <module>security</module>
         <module>user</module>
         <module>messaging</module>
-        <module>datasource</module>
         <module>webservice</module>
+        <module>datasource</module>
         <module>utils</module>
     </modules>
 

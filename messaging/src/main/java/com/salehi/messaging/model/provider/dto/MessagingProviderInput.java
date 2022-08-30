@@ -1,7 +1,7 @@
 package com.salehi.messaging.model.provider.dto;
 
-import com.salehi.datasource.relational.enums.messaging.MessageProviderType;
-import com.salehi.datasource.relational.enums.messaging.MessageType;
+import com.salehi.datasource.relational.enums.messaging.MessageProviderEnum;
+import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +22,7 @@ public class MessagingProviderInput {
     @NotBlank
     private String serviceToken;
     @NotNull
-    private MessageType supportedType;
+    private MessageTypeEnum supportedType;
     @NotNull
-    private MessageProviderType providerType;
+    private MessageProviderEnum provider;
 }

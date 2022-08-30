@@ -1,7 +1,7 @@
 package com.salehi.messaging.model.provider.repository;
 
 import com.salehi.datasource.relational.entity.messaging.MessagingProviderEntity;
-import com.salehi.datasource.relational.enums.messaging.MessageType;
+import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import com.salehi.datasource.relational.repository.GenericRepositoryImpl;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +16,6 @@ public class MessagingProviderRepository extends GenericRepositoryImpl<Messaging
 
     //TODO active
     public List<MessagingProviderEntity> getActiveSmsProviders() {
-        return this.getAllByFieldName("supportedType", MessageType.SMS);
+        return super.getAllByFieldName("supportedType", MessageTypeEnum.SMS);
     }
 }
