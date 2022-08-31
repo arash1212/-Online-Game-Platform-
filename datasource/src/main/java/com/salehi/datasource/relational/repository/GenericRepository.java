@@ -23,13 +23,17 @@ public interface GenericRepository<T extends IEntity> {
 
     T getByFieldName(String fieldName, String value);
 
-    public T getByFieldName(String fieldName, Object value);
+    T getByFieldName(String fieldName, Object value);
 
     List<T> getAllByFieldName(String fieldName, String value);
 
     List<T> getAllByFieldName(String fieldName, Object value);
 
-    public List<T> getAllByQuery(String queryString, Map<String, Object> params);
+    List<T> getAllByQuery(String queryString, Map<String, Object> params);
+
+    T getByQuery(String queryString, Map<String, Object> params);
 
     boolean existByFieldName(String fieldName, String value);
+
+    boolean existByFieldName(String fieldName, Object value);
 }

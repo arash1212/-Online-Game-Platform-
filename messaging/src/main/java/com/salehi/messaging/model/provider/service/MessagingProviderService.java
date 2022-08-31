@@ -42,6 +42,8 @@ public class MessagingProviderService {
     public Long save(MessagingProviderInput input) {
         if (this.providerRepository.existByFieldName("title", input.getTitle()))
             throw new EntityExistsException("title : " + input.getTitle());
+        if (this.providerRepository.existByFieldName("provider", input.getProvider()))
+            throw new EntityExistsException("provider : " + input.getProvider());
 
         MessagingProviderEntity entity = providerMapper.mapInputToEntity(input);
         return this.providerRepository.save(entity);

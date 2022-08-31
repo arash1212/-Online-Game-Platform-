@@ -13,10 +13,4 @@ public class MessageInput {
     private List<String> to;
     @NotBlank
     private String messageBody;
-    @NotBlank
-    private String serviceToken;
-    @NotBlank
-    private String serviceURL;
-    @NotBlank
-    private String headerName;
 }

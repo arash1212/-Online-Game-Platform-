@@ -1,10 +1,13 @@
 package com.salehi.webservice.messaging.providers.sms.parsgreen.service;
 
+import com.salehi.datasource.relational.entity.messaging.MessagingProviderEntity;
 import com.salehi.datasource.relational.enums.messaging.MessageProviderEnum;
 import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import com.salehi.webservice.messaging.providers.MessageInput;
+import com.salehi.webservice.messaging.providers.MessagingRepository;
 import com.salehi.webservice.messaging.providers.interfaces.IMessageService;
 import com.salehi.webservice.messaging.providers.sms.parsgreen.dto.ParsGreenSmsInput;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,13 +18,20 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInput> {
 
+    private final MessagingRepository messagingRepository;
+
+    @Autowired
+    public ParsGreenMessageService(MessagingRepository messagingRepository) {
+        this.messagingRepository = messagingRepository;
+    }
+
+    //header => Authorization , token prefix => basic apikey:
     @Override
-    //header : Authorization , token prefix : basic apikey:
     public String sendSms(MessageInput input) {
         ParsGreenSmsInput smsInput = this.getInput(input);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.set(smsInput.getTokenHeaderName(), "basic apikey:" + input.getServiceToken());
+        headers.set(smsInput.getTokenHeaderName(), "basic apikey:" + smsInput.getServiceToken());
         HttpEntity<ParsGreenSmsInput> request = new HttpEntity<>(smsInput, headers);
         ResponseEntity<String> response = restTemplate.exchange(smsInput.getServiceUrl(), HttpMethod.POST, request, String.class);
         return response.getBody();
@@ -29,8 +39,9 @@ public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInpu
 
     @Override
     public ParsGreenSmsInput getInput(MessageInput input) {
-        return new ParsGreenSmsInput(input.getMessageBody(), input.getTo(), null, input.getServiceURL()
-                , input.getServiceToken(), input.getHeaderName());
+        MessagingProviderEntity providerEntity = this.getCredentials();
+        return new ParsGreenSmsInput(input.getMessageBody(), input.getTo(), null, providerEntity.getServiceUrl()
+                , providerEntity.getServiceToken(), providerEntity.getTokenHeaderName());
     }
 
     @Override
@@ -43,4 +54,13 @@ public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInpu
         return MessageProviderEnum.PARS_GREEN;
     }
 
+    @Override
+    public MessagingProviderEntity getCredentials() {
+        return this.messagingRepository.getCredentialsByProvider(MessageProviderEnum.PARS_GREEN);
+    }
+
+    @Override
+    public boolean isActive() {
+       return this.getCredentials().isActive();
+    }
 }

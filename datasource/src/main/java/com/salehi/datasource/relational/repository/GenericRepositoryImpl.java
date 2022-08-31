@@ -116,7 +116,21 @@ public class GenericRepositoryImpl<T extends IEntity> implements GenericReposito
     }
 
     @Override
+    public T getByQuery(String queryString, Map<String, Object> params) {
+        Query query = entityManager.createQuery(queryString);
+        for (String key : params.keySet()) {
+            query.setParameter(key, params.get(key));
+        }
+        return (T) query.getResultList().stream().findFirst().orElse(null);
+    }
+
+    @Override
     public boolean existByFieldName(String fieldName, String value) {
+        return this.getByFieldName(fieldName, value) != null;
+    }
+
+    @Override
+    public boolean existByFieldName(String fieldName, Object value) {
         return this.getByFieldName(fieldName, value) != null;
     }
 
