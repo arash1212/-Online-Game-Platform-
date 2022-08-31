@@ -15,6 +15,4 @@ public interface IMessageService<T> {
     MessageProviderEnum getProviderType();
 
     MessagingProviderEntity getCredentials();
-
-    boolean isActive();
 }

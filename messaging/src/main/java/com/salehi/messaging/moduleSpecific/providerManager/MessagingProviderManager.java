@@ -31,7 +31,7 @@ public class MessagingProviderManager implements IMessagingProviderManager {
     private IMessageService<?> chooseMessageService(MessageTypeEnum type) {
         Map<String, IMessageService> messageServices = this.getMessageServices();
         for (IMessageService messageService : messageServices.values()) {
-            if (messageService.supports(type) && messageService.isActive()) {
+            if (messageService.supports(type) && messageService.getCredentials() != null) {
                 return messageService;
             }
         }

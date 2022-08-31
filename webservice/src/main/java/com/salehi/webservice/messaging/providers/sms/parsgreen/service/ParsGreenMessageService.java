@@ -59,8 +59,4 @@ public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInpu
         return this.messagingRepository.getCredentialsByProvider(MessageProviderEnum.PARS_GREEN);
     }
 
-    @Override
-    public boolean isActive() {
-       return this.getCredentials().isActive();
-    }
 }
