@@ -1,8 +1,8 @@
 package com.salehi.security.model.authority.controller;
 
-import com.salehi.security.model.authority.dto.AuthorityInput;
-import com.salehi.security.model.authority.dto.AuthorityOutput;
-import com.salehi.security.model.authority.service.AuthorityService;
+import com.salehi.security.model.authority.dto.SecurityAuthorityInput;
+import com.salehi.security.model.authority.dto.SecurityAuthorityOutput;
+import com.salehi.security.model.authority.service.SecurityAuthorityService;
 import com.salehi.utility.constant.PathVariableConstant;
 import com.salehi.utility.constant.RestControllerConstant;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Tag(name = "Adm-Authority")
+@Tag(name = "Adm-Security-Authority")
 @Validated
 @RestController
 @RequestMapping(path = RestControllerConstant.ADM + "/authorities")
-public class AdmAuthorityController {
+public class AdmSecurityAuthorityController {
 
     @Autowired
-    private AuthorityService authorityService;
+    private SecurityAuthorityService authorityService;
 
     @Operation(summary = "Get authority by id")
     @ApiResponses(value = {
@@ -36,7 +36,7 @@ public class AdmAuthorityController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AuthorityOutput> user(@PathVariable(name = PathVariableConstant.ID) Long id) {
+    public ResponseEntity<SecurityAuthorityOutput> user(@PathVariable(name = PathVariableConstant.ID) Long id) {
         return ResponseEntity.ok(this.authorityService.findById(id));
     }
 
@@ -46,7 +46,7 @@ public class AdmAuthorityController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema()))
     })
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AuthorityOutput>> users() {
+    public ResponseEntity<List<SecurityAuthorityOutput>> users() {
         return ResponseEntity.ok(this.authorityService.findAll());
     }
 
@@ -63,7 +63,7 @@ public class AdmAuthorityController {
                                     "  \"authority\": \"user\"\n" +
                                     "}"))
             )
-            @RequestBody AuthorityInput input, BindingResult result) {
+            @RequestBody SecurityAuthorityInput input, BindingResult result) {
         return ResponseEntity.ok(this.authorityService.save(input));
     }
 
@@ -80,7 +80,7 @@ public class AdmAuthorityController {
                                                "  \"authority\": \"admin\"\n" +
                                                "}"))
                        )
-                       @RequestBody AuthorityInput input, BindingResult result) {
+                       @RequestBody SecurityAuthorityInput input, BindingResult result) {
         this.authorityService.update(id, input);
     }
 

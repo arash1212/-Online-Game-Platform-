@@ -1,6 +1,6 @@
 package com.salehi.datasource.relational.entity.user;
 
-import com.salehi.datasource.relational.entity.security.AuthorityEntity;
+import com.salehi.datasource.relational.entity.security.SecurityAuthorityEntity;
 import com.salehi.datasource.relational.interfaces.IEntity;
 import com.salehi.utility.constant.RelationalDBConstant;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -76,7 +75,7 @@ public class UsersEntity implements IEntity {
                     @Index(name = "USER_AUTHORITY_IDX_AUTHORITY", columnList = "AUTHORITY_ID_FK")
             }
     )
-    private Set<AuthorityEntity> authorities;
+    private Set<SecurityAuthorityEntity> authorities;
 
     @PrePersist
     private void prePersist() {

@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 
 @Getter
 @Setter
-public class AuthorityOutput {
+public class SecurityAuthorityOutput {
     private ZonedDateTime creationTime;
     private String authority;
 }

@@ -1,6 +1,6 @@
 package com.salehi.user.model.user.dto;
 
-import com.salehi.datasource.relational.entity.security.AuthorityEntity;
+import com.salehi.datasource.relational.entity.security.SecurityAuthorityEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,5 +20,5 @@ public class UsersOutput extends UsersInput {
     private Boolean accountNonLocked;
     private Boolean credentialsNonExpired;
     private Boolean enabled;
-    private Set<AuthorityEntity> authorities;
+    private Set<SecurityAuthorityEntity> authorities;
 }

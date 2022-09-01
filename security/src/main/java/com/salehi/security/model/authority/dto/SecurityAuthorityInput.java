@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class AuthorityInput {
+public class SecurityAuthorityInput {
     @NotBlank
     @Size(max = 100)
     private String authority;

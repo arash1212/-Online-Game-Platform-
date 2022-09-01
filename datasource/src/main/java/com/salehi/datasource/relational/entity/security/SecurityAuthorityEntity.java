@@ -19,7 +19,7 @@ import java.util.Objects;
 @Table(name = "USER_AUTHORITY", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "USER_AUTHORITY_IDX_ID", columnList = "ID")
 })
-public class AuthorityEntity implements IEntity {
+public class SecurityAuthorityEntity implements IEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
