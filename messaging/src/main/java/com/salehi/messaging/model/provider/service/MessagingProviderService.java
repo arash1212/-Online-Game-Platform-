@@ -1,6 +1,7 @@
 package com.salehi.messaging.model.provider.service;
 
 import com.salehi.datasource.relational.entity.messaging.MessagingProviderEntity;
+import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.messaging.model.provider.dto.MessagingProviderInput;
 import com.salehi.messaging.model.provider.dto.MessagingProviderOutput;
 import com.salehi.messaging.model.provider.mapper.MessagingProviderMapper;
@@ -27,15 +28,15 @@ public class MessagingProviderService {
     }
 
     public MessagingProviderOutput findById(Long id) {
-        MessagingProviderEntity entity = providerRepository.getById(id);
+        MessagingProviderEntity entity = this.providerRepository.getById(id);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Provider ID : " + id);
 
-        return providerMapper.mapEntityToOutput(entity);
+        return this.providerMapper.mapEntityToOutput(entity);
     }
 
     public List<MessagingProviderOutput> findAll() {
-        List<MessagingProviderEntity> entities = providerRepository.getAll();
+        List<MessagingProviderEntity> entities = this.providerRepository.getAll();
         return entities.stream().filter(Objects::nonNull).map(providerMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
@@ -46,12 +47,12 @@ public class MessagingProviderService {
             throw new EntityExistsException("provider : " + input.getProvider());
 
         input.validate();
-        MessagingProviderEntity entity = providerMapper.mapInputToEntity(input);
+        MessagingProviderEntity entity = this.providerMapper.mapInputToEntity(input);
         return this.providerRepository.save(entity);
     }
 
     public void update(Long id, MessagingProviderInput input) {
-        MessagingProviderEntity entity = providerMapper.mapInputToEntity(input);
+        MessagingProviderEntity entity = this.providerMapper.mapInputToEntity(input);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Provider ID : " + id);
 
@@ -60,6 +61,10 @@ public class MessagingProviderService {
     }
 
     public void delete(Long id) {
+        MessagingProviderEntity entity = this.providerRepository.getById(id);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("Provider ID : " + id);
+
         this.providerRepository.delete(id);
     }
 

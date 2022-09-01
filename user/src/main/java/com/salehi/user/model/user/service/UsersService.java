@@ -27,15 +27,15 @@ public class UsersService {
     }
 
     public UsersOutput findById(Long id) {
-        UsersEntity entity = usersRepository.getById(id);
+        UsersEntity entity = this.usersRepository.getById(id);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("User ID :" + id);
 
-        return usersMapper.mapEntityToOutput(entity);
+        return this.usersMapper.mapEntityToOutput(entity);
     }
 
     public List<UsersOutput> findAll() {
-        List<UsersEntity> entities = usersRepository.getAll();
+        List<UsersEntity> entities = this.usersRepository.getAll();
         return entities.stream().filter(Objects::nonNull).map(usersMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
@@ -50,7 +50,7 @@ public class UsersService {
     }
 
     public void update(Long id, UsersInput input) {
-        UsersEntity entity = usersMapper.mapInputToEntity(input);
+        UsersEntity entity = this.usersMapper.mapInputToEntity(input);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("User ID : " + id);
 

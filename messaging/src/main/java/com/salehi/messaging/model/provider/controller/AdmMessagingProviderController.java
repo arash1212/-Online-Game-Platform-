@@ -109,7 +109,7 @@ public class AdmMessagingProviderController {
             @ApiResponse(responseCode = "200", description = "Resource deleted successfully"),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable(name = PathVariableConstant.ID) Long id) {
         this.providerService.delete(id);
     }

@@ -1,6 +1,7 @@
 package com.salehi.security.model.authority.service;
 
 import com.salehi.datasource.relational.entity.security.SecurityAuthorityEntity;
+import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.security.model.authority.dto.SecurityAuthorityInput;
 import com.salehi.security.model.authority.dto.SecurityAuthorityOutput;
 import com.salehi.security.model.authority.mapper.SecurityAuthorityMapper;
@@ -27,28 +28,28 @@ public class SecurityAuthorityService {
     }
 
     public SecurityAuthorityOutput findById(Long id) {
-        SecurityAuthorityEntity entity = authorityRepository.getById(id);
+        SecurityAuthorityEntity entity = this.authorityRepository.getById(id);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Authority ID : " + id);
 
-        return authorityMapper.mapEntityToOutput(entity);
+        return this.authorityMapper.mapEntityToOutput(entity);
     }
 
     public List<SecurityAuthorityOutput> findAll() {
-        List<SecurityAuthorityEntity> entities = authorityRepository.getAll();
+        List<SecurityAuthorityEntity> entities = this.authorityRepository.getAll();
         return entities.stream().filter(Objects::nonNull).map(authorityMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
     public Long save(SecurityAuthorityInput input) {
         if (this.authorityRepository.existByFieldName("authority", input.getAuthority()))
-            throw new EntityExistsException("authority : " + input.getAuthority());
+            throw new EntityExistsException("Authority : " + input.getAuthority());
 
-        SecurityAuthorityEntity entity = authorityMapper.mapInputToEntity(input);
+        SecurityAuthorityEntity entity = this.authorityMapper.mapInputToEntity(input);
         return this.authorityRepository.save(entity);
     }
 
     public void update(Long id, SecurityAuthorityInput input) {
-        SecurityAuthorityEntity entity = authorityMapper.mapInputToEntity(input);
+        SecurityAuthorityEntity entity = this.authorityMapper.mapInputToEntity(input);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Authority ID : " + id);
 
@@ -57,6 +58,10 @@ public class SecurityAuthorityService {
     }
 
     public void delete(Long id) {
+        SecurityAuthorityEntity entity = this.authorityRepository.getById(id);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("Authority ID : " + id);
+
         this.authorityRepository.delete(id);
     }
 

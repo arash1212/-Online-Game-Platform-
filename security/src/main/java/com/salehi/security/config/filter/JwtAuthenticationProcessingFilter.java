@@ -34,7 +34,7 @@ public class JwtAuthenticationProcessingFilter extends AbstractAuthenticationPro
         if (token == null || StringUtils.isBlank(token))
             throw new AccessDeniedException("Token/Bearer header not found");
 
-        JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(null, token, null);
+        JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(null, token.replaceAll("Bearer", ""), null);
         return this.getAuthenticationManager().authenticate(jwtAuthenticationToken);
     }
 

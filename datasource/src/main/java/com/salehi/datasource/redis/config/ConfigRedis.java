@@ -1,9 +1,14 @@
 package com.salehi.datasource.redis.config;
 
+import com.salehi.datasource.redis.interfaces.IRedisHash;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Configuration
@@ -22,5 +27,15 @@ public class ConfigRedis {
         template.setHashKeySerializer(RedisSerializer.json());
         template.setKeySerializer(RedisSerializer.string());
         return template;
+    }
+
+    @Bean
+    public HashOperations hashOperations(){
+        return this.redisTemplate().opsForHash();
+    }
+
+    @Bean
+    public SetOperations setOperations(){
+        return this.redisTemplate().opsForSet();
     }
 }
