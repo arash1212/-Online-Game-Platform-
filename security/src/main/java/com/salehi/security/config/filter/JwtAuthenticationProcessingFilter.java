@@ -17,6 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 public class JwtAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     public JwtAuthenticationProcessingFilter(RequestMatcher requestMatcher) {

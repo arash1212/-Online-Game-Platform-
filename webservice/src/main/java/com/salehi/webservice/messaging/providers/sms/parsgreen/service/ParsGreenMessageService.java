@@ -15,6 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Service
 public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInput> {
 

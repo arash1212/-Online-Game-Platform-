@@ -11,6 +11,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Component
 public class JwtUtils implements IJwtUtils {
 
@@ -35,5 +40,6 @@ public class JwtUtils implements IJwtUtils {
     }
 
     @Override
-    public void validate(String token){}
+    public void validate(String token) {
+    }
 }

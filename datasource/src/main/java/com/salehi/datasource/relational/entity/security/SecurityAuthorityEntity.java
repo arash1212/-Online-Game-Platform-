@@ -11,6 +11,11 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Getter
 @Setter
 @ToString

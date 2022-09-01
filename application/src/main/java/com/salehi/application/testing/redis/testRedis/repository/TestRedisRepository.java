@@ -4,6 +4,11 @@ import com.salehi.datasource.redis.hash.TestRedisHash;
 import com.salehi.datasource.redis.repository.RedisRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Repository
 public class TestRedisRepository extends RedisRepository<TestRedisHash> {
     @Override

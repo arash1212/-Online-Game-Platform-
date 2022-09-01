@@ -5,6 +5,11 @@ import com.salehi.datasource.relational.interfaces.IEntity;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 public interface IGenericRepository<T extends IEntity> {
 
     Class<T> getEntityClass();

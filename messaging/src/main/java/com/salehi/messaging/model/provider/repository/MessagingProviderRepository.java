@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Repository
 public class MessagingProviderRepository extends GenericRepositoryImpl<MessagingProviderEntity> {
     @Override

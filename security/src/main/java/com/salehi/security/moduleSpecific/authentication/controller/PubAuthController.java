@@ -19,7 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Tag(name = "Pub-Auth", description = "Authenticating in different methods")
 @Validated
 @RestController

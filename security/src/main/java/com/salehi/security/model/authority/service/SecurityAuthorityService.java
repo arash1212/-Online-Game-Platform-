@@ -1,7 +1,6 @@
 package com.salehi.security.model.authority.service;
 
 import com.salehi.datasource.relational.entity.security.SecurityAuthorityEntity;
-import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.security.model.authority.dto.SecurityAuthorityInput;
 import com.salehi.security.model.authority.dto.SecurityAuthorityOutput;
 import com.salehi.security.model.authority.mapper.SecurityAuthorityMapper;
@@ -15,6 +14,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Service
 public class SecurityAuthorityService {
 

@@ -11,6 +11,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Component
 public class MessagingProviderManager implements IMessagingProviderManager {
 

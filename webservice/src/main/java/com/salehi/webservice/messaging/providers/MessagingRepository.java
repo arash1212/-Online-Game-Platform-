@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Repository
 public class MessagingRepository extends GenericRepositoryImpl<MessagingProviderEntity> {
 

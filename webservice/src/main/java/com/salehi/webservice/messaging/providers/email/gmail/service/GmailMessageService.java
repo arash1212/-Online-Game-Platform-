@@ -16,6 +16,11 @@ import org.springframework.stereotype.Service;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Service
 public class GmailMessageService implements IMessageService<GmailInput> {
 

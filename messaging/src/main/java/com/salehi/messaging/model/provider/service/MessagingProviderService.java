@@ -1,7 +1,6 @@
 package com.salehi.messaging.model.provider.service;
 
 import com.salehi.datasource.relational.entity.messaging.MessagingProviderEntity;
-import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.messaging.model.provider.dto.MessagingProviderInput;
 import com.salehi.messaging.model.provider.dto.MessagingProviderOutput;
 import com.salehi.messaging.model.provider.mapper.MessagingProviderMapper;
@@ -15,6 +14,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Service
 public class MessagingProviderService {
 

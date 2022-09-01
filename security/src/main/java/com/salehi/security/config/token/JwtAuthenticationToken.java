@@ -6,6 +6,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Getter
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 

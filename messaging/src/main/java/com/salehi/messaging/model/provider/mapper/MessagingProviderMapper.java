@@ -5,6 +5,11 @@ import com.salehi.messaging.model.provider.dto.MessagingProviderInput;
 import com.salehi.messaging.model.provider.dto.MessagingProviderOutput;
 import org.mapstruct.Mapper;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 @Mapper(componentModel = "spring")
 public interface MessagingProviderMapper {
 

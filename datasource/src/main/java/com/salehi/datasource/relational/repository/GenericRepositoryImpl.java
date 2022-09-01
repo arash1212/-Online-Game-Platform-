@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Arash Salehi
+ * @author arashsalehi849@yahoo.com
+ * @since 0.0.1
+ */
 public class GenericRepositoryImpl<T extends IEntity> implements IGenericRepository<T> {
 
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
