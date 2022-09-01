@@ -6,13 +6,14 @@ import javax.el.MethodNotFoundException;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GenericRepositoryImpl<T extends IEntity> implements GenericRepository<T> {
+public class GenericRepositoryImpl<T extends IEntity> implements IGenericRepository<T> {
 
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager entityManager;
@@ -80,6 +81,20 @@ public class GenericRepositoryImpl<T extends IEntity> implements GenericReposito
         Root<T> root = criteriaQuery.from(this.getEntityClass());
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(fieldName), value));
 
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+        return query.getResultList().stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public T getByFieldName(String fieldName, String value, String[] joins) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.getEntityClass());
+        Root<T> root = criteriaQuery.from(this.getEntityClass());
+        criteriaQuery.select(root).where(criteriaBuilder.like(root.get(fieldName), value));
+
+        for (String join : joins) {
+            root.fetch(join, JoinType.LEFT);
+        }
         TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList().stream().findFirst().orElse(null);
     }

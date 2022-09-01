@@ -5,7 +5,7 @@ import com.salehi.datasource.relational.interfaces.IEntity;
 import java.util.List;
 import java.util.Map;
 
-public interface GenericRepository<T extends IEntity> {
+public interface IGenericRepository<T extends IEntity> {
 
     Class<T> getEntityClass();
 
@@ -24,6 +24,8 @@ public interface GenericRepository<T extends IEntity> {
     T getByFieldName(String fieldName, String value);
 
     T getByFieldName(String fieldName, Object value);
+
+    T getByFieldName(String fieldName, String value, String[] joins);
 
     List<T> getAllByFieldName(String fieldName, String value);
 

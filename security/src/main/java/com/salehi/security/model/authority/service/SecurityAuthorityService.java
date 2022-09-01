@@ -17,47 +17,47 @@ import java.util.stream.Collectors;
 @Service
 public class SecurityAuthorityService {
 
-    private final SecurityAuthorityRepository securityAuthorityRepository;
-    private final SecurityAuthorityMapper sECURITYAuthorityMapper;
+    private final SecurityAuthorityRepository authorityRepository;
+    private final SecurityAuthorityMapper authorityMapper;
 
     @Autowired
-    public SecurityAuthorityService(SecurityAuthorityRepository securityAuthorityRepository, SecurityAuthorityMapper sECURITYAuthorityMapper) {
-        this.securityAuthorityRepository = securityAuthorityRepository;
-        this.sECURITYAuthorityMapper = sECURITYAuthorityMapper;
+    public SecurityAuthorityService(SecurityAuthorityRepository authorityRepository, SecurityAuthorityMapper authorityMapper) {
+        this.authorityRepository = authorityRepository;
+        this.authorityMapper = authorityMapper;
     }
 
     public SecurityAuthorityOutput findById(Long id) {
-        SecurityAuthorityEntity entity = securityAuthorityRepository.getById(id);
+        SecurityAuthorityEntity entity = authorityRepository.getById(id);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Authority ID : " + id);
 
-        return sECURITYAuthorityMapper.mapEntityToOutput(entity);
+        return authorityMapper.mapEntityToOutput(entity);
     }
 
     public List<SecurityAuthorityOutput> findAll() {
-        List<SecurityAuthorityEntity> entities = securityAuthorityRepository.getAll();
-        return entities.stream().filter(Objects::nonNull).map(sECURITYAuthorityMapper::mapEntityToOutput).collect(Collectors.toList());
+        List<SecurityAuthorityEntity> entities = authorityRepository.getAll();
+        return entities.stream().filter(Objects::nonNull).map(authorityMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
     public Long save(SecurityAuthorityInput input) {
-        if (this.securityAuthorityRepository.existByFieldName("authority", input.getAuthority()))
+        if (this.authorityRepository.existByFieldName("authority", input.getAuthority()))
             throw new EntityExistsException("authority : " + input.getAuthority());
 
-        SecurityAuthorityEntity entity = sECURITYAuthorityMapper.mapInputToEntity(input);
-        return this.securityAuthorityRepository.save(entity);
+        SecurityAuthorityEntity entity = authorityMapper.mapInputToEntity(input);
+        return this.authorityRepository.save(entity);
     }
 
     public void update(Long id, SecurityAuthorityInput input) {
-        SecurityAuthorityEntity entity = sECURITYAuthorityMapper.mapInputToEntity(input);
+        SecurityAuthorityEntity entity = authorityMapper.mapInputToEntity(input);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Authority ID : " + id);
 
         entity.setId(id);
-        this.securityAuthorityRepository.update(entity);
+        this.authorityRepository.update(entity);
     }
 
     public void delete(Long id) {
-        this.securityAuthorityRepository.delete(id);
+        this.authorityRepository.delete(id);
     }
 
 }

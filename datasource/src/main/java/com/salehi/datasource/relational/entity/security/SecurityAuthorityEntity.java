@@ -1,15 +1,15 @@
 package com.salehi.datasource.relational.entity.security;
 
-import com.salehi.utility.constant.RelationalDBConstant;
 import com.salehi.datasource.relational.interfaces.IEntity;
+import com.salehi.utility.constant.RelationalDBConstant;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ import java.util.Objects;
 @Table(name = "USER_AUTHORITY", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "USER_AUTHORITY_IDX_ID", columnList = "ID")
 })
-public class SecurityAuthorityEntity implements IEntity {
+public class SecurityAuthorityEntity implements GrantedAuthority, IEntity {
     private static final long serialVersionUID = 1L;
 
     @Id

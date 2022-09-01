@@ -16,7 +16,7 @@ public class UsersDetailService {
 
     public UsersEntity extractJwtUser(String token) {
         String email = this.jwtUtils.getEmail(token);
-        UsersEntity entity = this.usersRepository.getByFieldName("email", email);
+        UsersEntity entity = this.usersRepository.getByFieldName("email", email, new String[]{"authorities"});
         if (entity == null)
             throw new AccessDeniedException("Wrong Credentials");
 
