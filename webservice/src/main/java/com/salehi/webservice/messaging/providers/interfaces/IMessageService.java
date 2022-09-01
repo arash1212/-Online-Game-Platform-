@@ -6,6 +6,8 @@ import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import com.salehi.webservice.messaging.providers.MessageInput;
 
 public interface IMessageService<T> {
+    String sendEmail(MessageInput input);
+
     String sendSms(MessageInput input);
 
     T getInput(MessageInput input);

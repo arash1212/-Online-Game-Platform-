@@ -1,6 +1,7 @@
 package com.salehi.messaging.moduleSpecific.providerManager;
 
 import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
+import com.salehi.messaging.moduleSpecific.dto.email.MessagingEmailInput;
 import com.salehi.messaging.moduleSpecific.dto.sms.MessagingSmsInput;
 import com.salehi.webservice.messaging.providers.MessageInput;
 import com.salehi.webservice.messaging.providers.interfaces.IMessageService;
@@ -23,9 +24,17 @@ public class MessagingProviderManager implements IMessagingProviderManager {
     public String sendSms(MessagingSmsInput input) {
         IMessageService<?> messageService = this.chooseMessageService(MessageTypeEnum.SMS);
         if (messageService != null)
-            return messageService.sendSms(this.getMessageServiceInput(input));
+            return messageService.sendSms(this.getMessageServiceSmsInput(input));
 
-        return "No MessageService Available";
+        return "No Sms MessageService Available";
+    }
+
+    public String sendEmail(MessagingEmailInput input) {
+        IMessageService<?> messageService = this.chooseMessageService(MessageTypeEnum.EMAIL);
+        if (messageService != null)
+            return messageService.sendEmail(this.getMessageServiceEmailInput(input));
+
+        return "No Email MessageService Available";
     }
 
     private IMessageService<?> chooseMessageService(MessageTypeEnum type) {
@@ -42,8 +51,16 @@ public class MessagingProviderManager implements IMessagingProviderManager {
         return applicationContext.getBeansOfType(IMessageService.class);
     }
 
-    private MessageInput getMessageServiceInput(MessagingSmsInput input) {
+    private MessageInput getMessageServiceSmsInput(MessagingSmsInput input) {
         MessageInput messageInput = new MessageInput();
+        messageInput.setTo(input.getTo());
+        messageInput.setMessageBody(input.getMessageBody());
+        return messageInput;
+    }
+
+    private MessageInput getMessageServiceEmailInput(MessagingEmailInput input) {
+        MessageInput messageInput = new MessageInput();
+        messageInput.setSubject(input.getSubject());
         messageInput.setTo(input.getTo());
         messageInput.setMessageBody(input.getMessageBody());
         return messageInput;

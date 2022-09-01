@@ -1,4 +1,4 @@
-package com.salehi.webservice.messaging.providers;
+package com.salehi.messaging.moduleSpecific.dto.email;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MessageInput {
-    private String subject;
+public class MessagingEmailInput {
+    @NotBlank
+    private String from;
     @NotBlank
     private List<String> to;
-    private String attachment;
     @NotBlank
     private String messageBody;
+    @NotBlank
+    private String subject;
 }

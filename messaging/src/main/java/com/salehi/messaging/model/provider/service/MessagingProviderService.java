@@ -45,6 +45,7 @@ public class MessagingProviderService {
         if (this.providerRepository.existByFieldName("provider", input.getProvider()))
             throw new EntityExistsException("provider : " + input.getProvider());
 
+        input.validate();
         MessagingProviderEntity entity = providerMapper.mapInputToEntity(input);
         return this.providerRepository.save(entity);
     }

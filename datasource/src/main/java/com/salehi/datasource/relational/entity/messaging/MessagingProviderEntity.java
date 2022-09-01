@@ -4,15 +4,18 @@ import com.salehi.datasource.relational.enums.messaging.MessageProviderEnum;
 import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import com.salehi.datasource.relational.interfaces.IEntity;
 import com.salehi.utility.constant.RelationalDBConstant;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "MESSAGING_PROVIDER", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "MESSAGING_PROVIDER_IDX_ID", columnList = "ID")
@@ -42,11 +45,20 @@ public class MessagingProviderEntity implements IEntity {
     @Column(name = "SERVICE_URL", length = 500, nullable = false)
     private String serviceUrl;
     @Basic
-    @Column(name = "TOKEN_HEADR_NAME", length = 100, nullable = false)
+    @Column(name = "PORT", length = 50, nullable = true)
+    private int port;
+    @Basic
+    @Column(name = "TOKEN_HEADR_NAME", length = 100, nullable = true)
     private String tokenHeaderName;
     @Basic
-    @Column(name = "SERVICE_TOKEN", length = 500, nullable = false)
+    @Column(name = "SERVICE_TOKEN", length = 500, nullable = true)
     private String serviceToken;
+    @Basic
+    @Column(name = "USERNAME", length = 200, nullable = true)
+    private String username;
+    @Basic
+    @Column(name = "PASSWORD", length = 500, nullable = true)
+    private String password;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "SUPPORTED_TYPE", nullable = false)
     private MessageTypeEnum supportedType;
@@ -58,35 +70,5 @@ public class MessagingProviderEntity implements IEntity {
     private void setCreationTime() {
         this.creationTime = ZonedDateTime.now();
         this.active = true;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MessagingProviderEntity that = (MessagingProviderEntity) o;
-        return active == that.active && id.equals(that.id) && title.equals(that.title) && creationTime.equals(that.creationTime) && serviceUrl.equals(that.serviceUrl) && tokenHeaderName.equals(that.tokenHeaderName) && serviceToken.equals(that.serviceToken) && supportedType == that.supportedType && provider == that.provider;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, active, creationTime, serviceUrl, tokenHeaderName, serviceToken, supportedType, provider);
-    }
-
-    @Override
-    public String toString() {
-        return "MessagingProviderEntity{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", active=" + active +
-                ", creationTime=" + creationTime +
-                ", description='" + description + '\'' +
-                ", serviceUrl='" + serviceUrl + '\'' +
-                ", tokenHeaderName='" + tokenHeaderName + '\'' +
-                ", serviceToken='" + serviceToken + '\'' +
-                ", supportedType=" + supportedType +
-                ", provider=" + provider +
-                '}';
     }
 }

@@ -3,8 +3,10 @@ package com.salehi.datasource.relational.entity.user;
 import com.salehi.datasource.relational.entity.security.AuthorityEntity;
 import com.salehi.datasource.relational.interfaces.IEntity;
 import com.salehi.utility.constant.RelationalDBConstant;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -13,6 +15,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "USERS", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "USERS_IDX_ID", columnList = "ID")
@@ -83,39 +87,5 @@ public class UsersEntity implements IEntity {
         this.creationTime = ZonedDateTime.now();
         this.emailConfirmationDate = null;
         this.mobileConfirmationDate = null;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UsersEntity entity = (UsersEntity) o;
-        return id.equals(entity.id) && creationTime.equals(entity.creationTime) && email.equals(entity.email) && mobile.equals(entity.mobile);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, creationTime, email, password, deleted, accountName, accountNonExpired,
-                accountNonLocked, credentialsNonExpired, enabled, authorities);
-    }
-
-    @Override
-    public String toString() {
-        return "UsersEntity{" +
-                "id=" + id +
-                ", creationTime=" + creationTime +
-                ", email='" + email + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", password='" + password + '\'' +
-                ", deleted=" + deleted +
-                ", accountName='" + accountName + '\'' +
-                ", accountNonExpired=" + accountNonExpired +
-                ", accountNonLocked=" + accountNonLocked +
-                ", credentialsNonExpired=" + credentialsNonExpired +
-                ", enabled=" + enabled +
-                ", emailConfirmationDate=" + emailConfirmationDate +
-                ", mobileConfirmationDate=" + mobileConfirmationDate +
-                ", authorities=" + authorities +
-                '}';
     }
 }

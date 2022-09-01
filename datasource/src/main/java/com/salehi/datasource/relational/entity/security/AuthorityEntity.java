@@ -2,8 +2,10 @@ package com.salehi.datasource.relational.entity.security;
 
 import com.salehi.utility.constant.RelationalDBConstant;
 import com.salehi.datasource.relational.interfaces.IEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -11,6 +13,8 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "USER_AUTHORITY", schema = RelationalDBConstant.DEFAULT_SCHEMA, indexes = {
         @Index(name = "USER_AUTHORITY_IDX_ID", columnList = "ID")
@@ -36,27 +40,5 @@ public class AuthorityEntity implements IEntity {
     @PrePersist
     private void setCreationTime() {
         this.creationTime = ZonedDateTime.now();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AuthorityEntity that = (AuthorityEntity) o;
-        return id.equals(that.id) && creationTime.equals(that.creationTime) && authority.equals(that.authority);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, creationTime, authority);
-    }
-
-    @Override
-    public String toString() {
-        return "AuthorityEntity{" +
-                "id=" + id +
-                ", creationTime=" + creationTime +
-                ", authority='" + authority + '\'' +
-                '}';
     }
 }

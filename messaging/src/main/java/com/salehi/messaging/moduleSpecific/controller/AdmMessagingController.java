@@ -1,8 +1,9 @@
 package com.salehi.messaging.moduleSpecific.controller;
 
+import com.salehi.messaging.moduleSpecific.dto.email.MessagingEmailInput;
+import com.salehi.messaging.moduleSpecific.dto.sms.MessagingSmsInput;
 import com.salehi.messaging.moduleSpecific.providerManager.IMessagingProviderManager;
 import com.salehi.utility.constant.RestControllerConstant;
-import com.salehi.messaging.moduleSpecific.dto.sms.MessagingSmsInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,4 +51,26 @@ public class AdmMessagingController {
         return ResponseEntity.ok(this.providerManager.sendSms(input));
     }
 
+    @Operation(summary = "Send Email")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Message Sent Successfully")
+    })
+    @PostMapping(path = "/send-email", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> sendEmail(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"to\": [\n" +
+                                            "    \"test849@yahoo.com\"\n" +
+                                            "  ],\n" +
+                                            "  \"messageBody\": \"Test Message Body\",\n" +
+                                            "  \"subject\": \"Test Subject\"\n" +
+                                            "}"
+                            )
+                    )
+            )
+            @RequestBody MessagingEmailInput input, BindingResult bindingResult) {
+        return ResponseEntity.ok(this.providerManager.sendEmail(input));
+    }
 }

@@ -25,6 +25,11 @@ public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInpu
         this.messagingRepository = messagingRepository;
     }
 
+    @Override
+    public String sendEmail(MessageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
     //header => Authorization , token prefix => basic apikey:
     @Override
     public String sendSms(MessageInput input) {
