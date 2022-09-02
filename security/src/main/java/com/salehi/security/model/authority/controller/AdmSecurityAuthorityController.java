@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,7 @@ public class AdmSecurityAuthorityController {
     })
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SecurityAuthorityOutput>> users() {
+        System.out.println("+++++++++++++++++email : "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return ResponseEntity.ok(this.authorityService.findAll());
     }
 

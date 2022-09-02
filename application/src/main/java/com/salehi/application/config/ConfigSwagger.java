@@ -48,6 +48,14 @@ public class ConfigSwagger {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi apiIdentity() {
+        return GroupedOpenApi.builder()
+                .group("Identity")
+                .pathsToMatch(RestControllerConstant.IDT + "/**")
+                .build();
+    }
+
     private Contact contact() {
         Contact contact = new Contact();
         contact.setEmail("arashsalehi849@yahoo.com");

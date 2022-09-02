@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
@@ -21,8 +22,8 @@ public class ConfigRedis {
     }
 
     @Bean
-    public RedisTemplate redisTemplate() {
-        RedisTemplate template = new RedisTemplate<>();
+    public RedisTemplate<?, ?> redisTemplate() {
+        RedisTemplate<?, ?> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         template.setValueSerializer(RedisSerializer.json());
         template.setHashKeySerializer(RedisSerializer.string());
@@ -32,12 +33,17 @@ public class ConfigRedis {
     }
 
     @Bean
-    public HashOperations hashOperations() {
+    public HashOperations<?, ?, ?> hashOperations() {
         return this.redisTemplate().opsForHash();
     }
 
     @Bean
-    public SetOperations setOperations() {
+    public SetOperations<?, ?> setOperations() {
         return this.redisTemplate().opsForSet();
+    }
+
+    @Bean
+    public ValueOperations<?, ?> valueOperations() {
+        return this.redisTemplate().opsForValue();
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @since 0.0.1
  */
 @Service
-public class UsersDetailService {
+public class SecurityUsersDetailService {
     @Autowired
     private IJwtUtils jwtUtils;
     @Autowired

@@ -1,4 +1,4 @@
-package com.salehi.application.testing.redis.testRedis.dto;
+package com.salehi.security.model.mobileOtp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,13 +9,16 @@ import javax.validation.constraints.NotNull;
 /**
  * @author Arash Salehi
  * @author arashsalehi849@yahoo.com
+ * @date 2022-09-02 09:05
  * @since 0.0.1
  */
 @Getter
 @Setter
-public class TestRedisInput {
-    @NotBlank
-    private String name;
+public class SecurityMobileOtpInput {
     @NotNull
-    private Integer score;
+    private String id;
+    @NotBlank
+    private String username;
+    @NotBlank
+    private Integer otp;
 }

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Getter
 @Setter
-public class JwtInput {
+public class SecurityJwtInput {
     @Email
     @NotBlank
     private String email;

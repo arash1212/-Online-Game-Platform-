@@ -22,12 +22,12 @@ import java.util.Properties;
  * @since 0.0.1
  */
 @Service
-public class GmailMessageService implements IMessageService<GmailInput> {
+public class GmailMessageServiceImpl implements IMessageService<GmailInput> {
 
     private final MessagingRepository messagingRepository;
 
     @Autowired
-    public GmailMessageService(MessagingRepository messagingRepository) {
+    public GmailMessageServiceImpl(MessagingRepository messagingRepository) {
         this.messagingRepository = messagingRepository;
     }
 

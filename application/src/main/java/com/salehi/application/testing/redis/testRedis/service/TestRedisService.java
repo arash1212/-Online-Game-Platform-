@@ -31,7 +31,7 @@ public class TestRedisService {
         this.testRepository.createWithIndex(this.testMapper.mapInputToEntity(input));
     }
 
-    public TestRedisHash findById(String id) {
+    public TestRedisHash findById(Long id) {
         TestRedisHash hash = this.testRepository.getById(id);
         if (hash == null)
             throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);
@@ -44,7 +44,7 @@ public class TestRedisService {
         return hashes.stream().map(this.testMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         TestRedisHash hash = this.testRepository.getById(id);
         if (hash == null)
             throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);

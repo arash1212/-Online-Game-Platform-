@@ -6,5 +6,7 @@ package com.salehi.datasource.redis.interfaces;
  * @since 0.0.1
  */
 public interface IRedisHash {
-    String getId();
+    Long getId();
+
+    void setId(Long id);
 }

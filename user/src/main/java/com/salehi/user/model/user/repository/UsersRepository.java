@@ -4,6 +4,8 @@ import com.salehi.datasource.relational.entity.user.UsersEntity;
 import com.salehi.datasource.relational.repository.GenericRepositoryImpl;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * @author Arash Salehi
  * @author arashsalehi849@yahoo.com
@@ -18,6 +20,10 @@ public class UsersRepository extends GenericRepositoryImpl<UsersEntity> {
     }
 
     public UsersEntity getByEmail(String email) {
-        return this.getByFieldName("email", email);
+        return super.getByFieldName("email", email);
+    }
+
+    public void updateField(String fieldName, Object value, Map<String, Object> condition) {
+        super.updateField(fieldName, value, condition, UsersEntity.class);
     }
 }

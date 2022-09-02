@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 0.0.1
  */
 @Component
-public class JwtUtils implements IJwtUtils {
+public class JwtUtilsImpl implements IJwtUtils {
 
     @Value("${JwtSecret}")
     private String JWT_SECRET;

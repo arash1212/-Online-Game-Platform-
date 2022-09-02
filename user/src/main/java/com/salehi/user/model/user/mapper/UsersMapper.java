@@ -18,4 +18,5 @@ public interface UsersMapper {
     UsersEntity mapOutputToEntity(UsersOutput output);
 
     UsersOutput mapEntityToOutput(UsersEntity entity);
+
 }

@@ -1,6 +1,7 @@
 package com.salehi.security.config.filter;
 
 import com.salehi.security.config.token.JwtAuthenticationToken;
+import com.salehi.utility.constant.RestControllerConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
@@ -24,8 +26,13 @@ import java.io.IOException;
  */
 public class JwtAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
+    public final static RequestMatcher REQUEST_MATCHER = new OrRequestMatcher(
+            new AntPathRequestMatcher(RestControllerConstant.ADM + "/**"),
+            new AntPathRequestMatcher(RestControllerConstant.IDT + "/**")
+    );
+
     public JwtAuthenticationProcessingFilter(RequestMatcher requestMatcher) {
-        super(new AntPathRequestMatcher("/api/adm/**"));
+        super(REQUEST_MATCHER);
     }
 
     @Override

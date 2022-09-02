@@ -50,7 +50,6 @@ public class PubTestRedisController {
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(schema = @Schema(
                             example = "{\n" +
-                                    "  \"id\": \"1\",\n" +
                                     "  \"name\": \"arash\",\n" +
                                     "  \"score\": 15\n" +
                                     "}"
@@ -66,7 +65,7 @@ public class PubTestRedisController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TestRedisHash> user(@PathVariable(name = PathVariableConstant.ID) String id) {
+    public ResponseEntity<TestRedisHash> user(@PathVariable(name = PathVariableConstant.ID) Long id) {
         return ResponseEntity.ok(this.testRedisService.findById(id));
     }
 
@@ -85,7 +84,7 @@ public class PubTestRedisController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable(name = PathVariableConstant.ID) String id) {
+    public void delete(@PathVariable(name = PathVariableConstant.ID) Long id) {
         this.testRedisService.delete(id);
     }
 }

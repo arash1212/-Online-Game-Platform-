@@ -1,14 +1,11 @@
 package com.salehi.datasource.relational.repository;
 
 import com.salehi.datasource.relational.interfaces.IEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.el.MethodNotFoundException;
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +63,19 @@ public class GenericRepositoryImpl<T extends IEntity> implements IGenericReposit
     @Override
     public List<Integer> save(List<T> ts) {
         throw new MethodNotFoundException();
+    }
+
+    @Transactional
+    public void updateField(String fieldName, Object value, Map<String, Object> conditions, Class<T> tClass) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+        CriteriaUpdate<T> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(tClass);
+        Root<T> root = criteriaUpdate.from(tClass);
+
+        criteriaUpdate.set(fieldName, value);
+        for (String condition : conditions.keySet())
+            criteriaUpdate.where(criteriaBuilder.equal(root.get(condition), conditions.get(condition)));
+
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 
     @Override
@@ -153,5 +163,20 @@ public class GenericRepositoryImpl<T extends IEntity> implements IGenericReposit
     public boolean existByFieldName(String fieldName, Object value) {
         return this.getByFieldName(fieldName, value) != null;
     }
+
+
+////    //TODO update beshe
+//    public void updateFields(Map<String, Object> updateFields, Map<String, Object> conditions, Class<T> tClass) {
+//        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+//        CriteriaUpdate<T> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(tClass);
+//        Root<T> root = criteriaUpdate.from(tClass);
+//
+//        for (String value : updateFields.keySet())
+//            criteriaUpdate.set(value, updateFields.get(value));
+//        for (String condition : conditions.keySet())
+//            criteriaUpdate.where(criteriaBuilder.greaterThanOrEqualTo(root.get(condition), (String) conditions.get(condition)));
+//
+//        this.entityManager.createQuery(criteriaUpdate).executeUpdate();
+//    }
 
 }

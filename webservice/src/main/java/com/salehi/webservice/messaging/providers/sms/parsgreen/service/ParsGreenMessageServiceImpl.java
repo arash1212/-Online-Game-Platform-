@@ -21,12 +21,12 @@ import org.springframework.web.client.RestTemplate;
  * @since 0.0.1
  */
 @Service
-public class ParsGreenMessageService implements IMessageService<ParsGreenSmsInput> {
+public class ParsGreenMessageServiceImpl implements IMessageService<ParsGreenSmsInput> {
 
     private final MessagingRepository messagingRepository;
 
     @Autowired
-    public ParsGreenMessageService(MessagingRepository messagingRepository) {
+    public ParsGreenMessageServiceImpl(MessagingRepository messagingRepository) {
         this.messagingRepository = messagingRepository;
     }
 

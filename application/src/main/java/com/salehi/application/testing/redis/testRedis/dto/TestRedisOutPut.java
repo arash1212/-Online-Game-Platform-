@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TestRedisOutPut {
-    private String id;
+    private Long id;
     private String name;
     private Integer score;
 }

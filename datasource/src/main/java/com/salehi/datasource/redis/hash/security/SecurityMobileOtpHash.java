@@ -1,4 +1,4 @@
-package com.salehi.datasource.redis.hash;
+package com.salehi.datasource.redis.hash.security;
 
 import com.salehi.datasource.redis.interfaces.IRedisHash;
 import lombok.Getter;
@@ -12,16 +12,17 @@ import java.io.Serializable;
 /**
  * @author Arash Salehi
  * @author arashsalehi849@yahoo.com
+ * @date 2022-09-01 23:40
  * @since 0.0.1
  */
 @Getter
 @Setter
-@RedisHash(value = "TestRedis")
-public class TestRedisHash implements IRedisHash, Serializable {
+@RedisHash(value = "SECURITY_MOBILE_OTP")
+public class SecurityMobileOtpHash implements IRedisHash, Serializable {
     @Id
     private Long id;
     @Indexed
-    private String name;
+    private String username;
     @Indexed
-    private int score;
+    private String otp;
 }

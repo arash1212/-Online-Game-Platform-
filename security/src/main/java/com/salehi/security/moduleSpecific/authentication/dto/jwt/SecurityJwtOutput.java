@@ -8,10 +8,10 @@ import lombok.Getter;
  * @since 0.0.1
  */
 @Getter
-public class JwtOutput {
+public class SecurityJwtOutput {
     String token;
 
-    public JwtOutput(String token) {
+    public SecurityJwtOutput(String token) {
         this.token = token;
     }
 }

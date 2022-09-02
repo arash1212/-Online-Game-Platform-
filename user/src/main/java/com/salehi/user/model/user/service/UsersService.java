@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,6 +36,14 @@ public class UsersService {
         UsersEntity entity = this.usersRepository.getById(id);
         if (entity == null)
             throw new OpenApiResourceNotFoundException("User ID :" + id);
+
+        return this.usersMapper.mapEntityToOutput(entity);
+    }
+
+    public UsersOutput findByUsername(String username) {
+        UsersEntity entity = this.usersRepository.getByEmail(username);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("email :" + username);
 
         return this.usersMapper.mapEntityToOutput(entity);
     }
@@ -69,6 +78,17 @@ public class UsersService {
             throw new OpenApiResourceNotFoundException("User ID : " + id);
 
         this.usersRepository.delete(id);
+    }
+
+    public void updateMobileConfirmationDate(String email) {
+        UsersEntity entity = this.usersRepository.getByEmail(email);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("User email : " + email);
+//        Map<String, Object> conditions = new HashMap<>();
+//        conditions.put("email", email);
+//        this.usersRepository.updateField("mobileConfirmationDate", ZonedDateTime.now(), conditions);
+        entity.setMobileConfirmationDate(ZonedDateTime.now());
+        this.usersRepository.update(entity);
     }
 
 }

@@ -17,12 +17,12 @@ import java.util.Map;
  * @since 0.0.1
  */
 @Component
-public class MessagingProviderManager implements IMessagingProviderManager {
+public class MessagingProviderManagerImpl implements IMessagingProviderManager {
 
     private final ApplicationContext applicationContext;
 
     @Autowired
-    public MessagingProviderManager(ApplicationContext applicationContext) {
+    public MessagingProviderManagerImpl(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
