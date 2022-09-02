@@ -59,14 +59,24 @@ public class PubTestRedisController {
         this.testRedisService.create(input);
     }
 
-    @Operation(summary = "Get RedisTests by id")
+    @Operation(summary = "Get RedisTest by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Resource Found"),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TestRedisHash> user(@PathVariable(name = PathVariableConstant.ID) Long id) {
+    public ResponseEntity<TestRedisHash> redisTest(@PathVariable(name = PathVariableConstant.ID) Long id) {
         return ResponseEntity.ok(this.testRedisService.findById(id));
+    }
+
+    @Operation(summary = "Get RedisTest list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully Loaded Resources"),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema()))
+    })
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TestRedisOutPut>> redisTests() {
+        return ResponseEntity.ok(this.testRedisService.findAll());
     }
 
     @Operation(summary = "Get All RedisTests by name")

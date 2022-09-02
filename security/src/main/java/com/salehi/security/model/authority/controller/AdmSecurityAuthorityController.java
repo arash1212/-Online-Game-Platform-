@@ -42,7 +42,7 @@ public class AdmSecurityAuthorityController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SecurityAuthorityOutput> user(@PathVariable(name = PathVariableConstant.ID) Long id) {
+    public ResponseEntity<SecurityAuthorityOutput> authority(@PathVariable(name = PathVariableConstant.ID) Long id) {
         return ResponseEntity.ok(this.authorityService.findById(id));
     }
 
@@ -52,8 +52,7 @@ public class AdmSecurityAuthorityController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema()))
     })
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SecurityAuthorityOutput>> users() {
-        System.out.println("+++++++++++++++++email : "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public ResponseEntity<List<SecurityAuthorityOutput>> authorities() {
         return ResponseEntity.ok(this.authorityService.findAll());
     }
 

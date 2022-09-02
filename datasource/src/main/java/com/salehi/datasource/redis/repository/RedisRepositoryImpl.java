@@ -37,6 +37,7 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         String id = String.valueOf(this.generateId());
         t.setId(id);
         String key = this.getHashName() + ":" + t.getId();
+        this.addKeyToHashSet(id);
         this.setExpireTime(t, key);
         this.hashOperations.put(key, t.getId(), t);
     }
@@ -45,6 +46,7 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         String id = String.valueOf(uniqueField);
         t.setId(id);
         String key = this.getHashName() + ":" + uniqueField;
+        this.addKeyToHashSet(id);
         this.setExpireTime(t, key);
         this.hashOperations.put(key, id, t);
     }
@@ -54,6 +56,7 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         t.setId(id);
         String key = this.getHashName() + ":" + t.getId();
         this.hashOperations.put(key, t.getId(), t);
+        this.addKeyToHashSet(id);
         this.setExpireTime(t, key);
         this.createIndexes(t, t.getId());
     }
@@ -63,19 +66,17 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         t.setId(id);
         String key = this.getHashName() + ":" + uniqueField;
         this.hashOperations.put(key, id, t);
+        this.addKeyToHashSet(id);
         this.setExpireTime(t, key);
         this.createIndexes(t, uniqueField);
     }
 
-//    public void createWithTtl(T t, Long ttl) {
-//        this.hashOperations.put(this.getHashName() + ":" + t.getId(), this.getHashName(), t);
-//        this.redisTemplate.expire(t.getId(), ttl, TimeUnit.SECONDS);
-//    }
-
+    //todo az hashset ham hazf beshe
     public void delete(T t) {
         String key = this.getHashName() + ":" + t.getId();
         this.removeIndexes(t, t.getId());
         this.redisTemplate.delete(key);
+        this.removeKeyFromHashSet(t.getId());
     }
 
     public T getById(Long id) {
@@ -94,6 +95,19 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
             }
         }
         return result.get(0) != null ? result.get(0) : null;
+    }
+
+    public List<T> getAll() {
+        String key = this.getHashName();
+        Set<T> intersects = this.redisTemplate.opsForSet().intersect(Collections.singletonList(key));
+        List<T> result = new ArrayList<>();
+        if (intersects != null && intersects.size() > 0) {
+            for (Object o : intersects) {
+                Map<String, T> hash = this.hashOperations.entries(this.getHashName() + ":" + o);
+                result.add(hash.values().stream().findFirst().orElse(null));
+            }
+        }
+        return result.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     public List<T> getAllByField(String fieldName, Object value) {
@@ -116,7 +130,7 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
                 field.setAccessible(true);
                 String key = this.getHashName() + ":" + field.getName() + ":" + field.get(t);
                 this.setOperations.add(key, String.valueOf(uniqueField));
-                this.setExpireTime(t, key);
+//                this.setExpireTime(t, key);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,5 +165,13 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         long ttl = t.getClass().getAnnotation(RedisHash.class).timeToLive();
         if (ttl != -1)
             this.redisTemplate.expire(key, ttl, TimeUnit.SECONDS);
+    }
+
+    private void addKeyToHashSet(String key) {
+        this.setOperations.add(this.getHashName(), key);
+    }
+
+    private void removeKeyFromHashSet(String key) {
+        this.setOperations.remove(this.getHashName(), key);
     }
 }

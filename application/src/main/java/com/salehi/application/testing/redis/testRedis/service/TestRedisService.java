@@ -9,6 +9,7 @@ import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +38,10 @@ public class TestRedisService {
             throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);
 
         return this.testRepository.getById(id);
+    }
+
+    public List<TestRedisOutPut> findAll() {
+        return this.testRepository.getAll().stream().filter(Objects::nonNull).map(this.testMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
     public List<TestRedisOutPut> findByName(String value) {
