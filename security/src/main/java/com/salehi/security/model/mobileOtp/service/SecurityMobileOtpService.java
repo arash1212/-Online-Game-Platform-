@@ -5,6 +5,8 @@ import com.salehi.security.model.mobileOtp.dto.SecurityMobileOtpInput;
 import com.salehi.security.model.mobileOtp.dto.SecurityMobileOtpOut;
 import com.salehi.security.model.mobileOtp.mapper.SecurityMobileOtpMapper;
 import com.salehi.security.model.mobileOtp.repository.SecurityMobileOtpRepository;
+import com.salehi.user.model.user.dto.UsersOutput;
+import com.salehi.user.model.user.service.UsersService;
 import com.salehi.utility.utils.interfaces.ISecurityUtils;
 import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,22 @@ public class SecurityMobileOtpService {
     private final SecurityMobileOtpRepository otpRepository;
     private final SecurityMobileOtpMapper otpMapper;
     private final ISecurityUtils securityUtils;
+    private final UsersService usersService;
 
     @Autowired
-    public SecurityMobileOtpService(SecurityMobileOtpRepository otpRepository, SecurityMobileOtpMapper otpMapper, ISecurityUtils securityUtils) {
+    public SecurityMobileOtpService(SecurityMobileOtpRepository otpRepository, SecurityMobileOtpMapper otpMapper, ISecurityUtils securityUtils, UsersService usersService) {
         this.otpRepository = otpRepository;
         this.otpMapper = otpMapper;
         this.securityUtils = securityUtils;
+        this.usersService = usersService;
     }
 
     public void create(SecurityMobileOtpInput input) {
-        this.otpRepository.createWithIndex(this.otpMapper.mapInputToEntity(input));
+        UsersOutput usersOutput = this.usersService.findByUsername(input.getUsername());
+        if (usersOutput == null)
+            throw new OpenApiResourceNotFoundException("user : " + input.getUsername());
+
+        this.otpRepository.createOrReplaceWitIndex(this.otpMapper.mapInputToEntity(input), input.getUsername());
     }
 
     public SecurityMobileOtpHash findById(Long id) {
@@ -63,10 +71,9 @@ public class SecurityMobileOtpService {
         this.otpRepository.delete(hash);
     }
 
-    //TODO delete ghabli agar bud
     public SecurityMobileOtpOut generateOtp(String username) {
         SecurityMobileOtpHash otpHash = this.getOtpHash(username);
-        this.otpRepository.createWithIndex(otpHash);
+        this.otpRepository.createOrReplaceWitIndex(otpHash, username);
         return this.otpMapper.mapEntityToOutput(otpHash);
     }
 

@@ -17,10 +17,10 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@RedisHash(value = "SECURITY_MOBILE_OTP")
+@RedisHash(value = "SECURITY_MOBILE_OTP", timeToLive = 60)
 public class SecurityMobileOtpHash implements IRedisHash, Serializable {
     @Id
-    private Long id;
+    private String id;
     @Indexed
     private String username;
     @Indexed

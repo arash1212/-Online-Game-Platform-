@@ -3,15 +3,13 @@ package com.salehi.datasource.redis.repository;
 import com.salehi.datasource.redis.interfaces.IRedisHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.index.Indexed;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -25,27 +23,48 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
     @Autowired
     private RedisTemplate<String, T> redisTemplate;
     @Autowired
-    private SetOperations<String, Long> setOperations;
+    private SetOperations<String, String> setOperations;
     @Autowired
-    private ValueOperations<String, Long> valueOperations;
+    private ValueOperations<String, String> valueOperations;
     @Autowired
-    private HashOperations<String, Long, T> hashOperations;
+    private HashOperations<String, String, T> hashOperations;
 
     public String getHashName() {
         throw new UnsupportedOperationException();
     }
 
     public void create(T t) {
-        t.setId(this.generateId());
+        String id = String.valueOf(this.generateId());
+        t.setId(id);
         String key = this.getHashName() + ":" + t.getId();
+        this.setExpireTime(t, key);
         this.hashOperations.put(key, t.getId(), t);
     }
 
+    public void createOrReplace(T t, Object uniqueField) {
+        String id = String.valueOf(uniqueField);
+        t.setId(id);
+        String key = this.getHashName() + ":" + uniqueField;
+        this.setExpireTime(t, key);
+        this.hashOperations.put(key, id, t);
+    }
+
     public void createWithIndex(T t) {
-        t.setId(this.generateId());
+        String id = String.valueOf(this.generateId());
+        t.setId(id);
         String key = this.getHashName() + ":" + t.getId();
         this.hashOperations.put(key, t.getId(), t);
-        this.createIndexes(t);
+        this.setExpireTime(t, key);
+        this.createIndexes(t, t.getId());
+    }
+
+    public void createOrReplaceWitIndex(T t, Object uniqueField) {
+        String id = String.valueOf(uniqueField);
+        t.setId(id);
+        String key = this.getHashName() + ":" + uniqueField;
+        this.hashOperations.put(key, id, t);
+        this.setExpireTime(t, key);
+        this.createIndexes(t, uniqueField);
     }
 
 //    public void createWithTtl(T t, Long ttl) {
@@ -55,7 +74,7 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
 
     public void delete(T t) {
         String key = this.getHashName() + ":" + t.getId();
-        this.removeIndexes(t);
+        this.removeIndexes(t, t.getId());
         this.redisTemplate.delete(key);
     }
 
@@ -64,14 +83,13 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         return hashOperations.entries(key).values().stream().findFirst().orElse(null);
     }
 
-    //TODO bayad unique bashe meghdar (?)
     public T getByField(String fieldName, Object value) {
         String key = this.getHashName() + ":" + fieldName + ":" + value;
         Set<T> intersects = this.redisTemplate.opsForSet().intersect(Collections.singletonList(key));
         List<T> result = new ArrayList<>();
         if (intersects != null && intersects.size() > 0) {
             for (Object o : intersects) {
-                Map<Long, T> hash = this.hashOperations.entries(this.getHashName() + ":" + o);
+                Map<String, T> hash = this.hashOperations.entries(this.getHashName() + ":" + o);
                 result.add(hash.values().stream().findFirst().orElse(null));
             }
         }
@@ -84,33 +102,34 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         List<T> result = new ArrayList<>();
         if (intersects != null && intersects.size() > 0) {
             for (Object o : intersects) {
-                Map<Long, T> hash = this.hashOperations.entries(this.getHashName() + ":" + o);
+                Map<String, T> hash = this.hashOperations.entries(this.getHashName() + ":" + o);
                 result.add(hash.values().stream().findFirst().orElse(null));
             }
         }
-        return result;
+        return result.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    private void createIndexes(T t) {
+    private void createIndexes(T t, Object uniqueField) {
         try {
             List<Field> indexedFields = this.getIndexedFields(t);
             for (Field field : indexedFields) {
                 field.setAccessible(true);
                 String key = this.getHashName() + ":" + field.getName() + ":" + field.get(t);
-                this.setOperations.add(key, t.getId());
+                this.setOperations.add(key, String.valueOf(uniqueField));
+                this.setExpireTime(t, key);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void removeIndexes(T t) {
+    private void removeIndexes(T t, Object uniqueField) {
         try {
             List<Field> indexedFields = this.getIndexedFields(t);
             for (Field field : indexedFields) {
                 field.setAccessible(true);
                 String key = this.getHashName() + ":" + field.getName() + ":" + field.get(t);
-                this.setOperations.remove(key, t.getId());
+                this.setOperations.remove(key, uniqueField);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,5 +145,11 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
     private Long generateId() {
         String sequence = this.getHashName() + "_SEQUENCE";
         return this.valueOperations.increment(sequence);
+    }
+
+    private void setExpireTime(T t, String key) {
+        long ttl = t.getClass().getAnnotation(RedisHash.class).timeToLive();
+        if (ttl != -1)
+            this.redisTemplate.expire(key, ttl, TimeUnit.SECONDS);
     }
 }

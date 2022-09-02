@@ -57,7 +57,7 @@ public class IdtUserVerificationController {
                                                         content = @Content(
                                                                 schema = @Schema(
                                                                         example = "{\n" +
-                                                                                "  \"otp\": 12356\n" +
+                                                                                "  \"otp\": 1234\n" +
                                                                                 "}"
                                                                 ))
                                                 )

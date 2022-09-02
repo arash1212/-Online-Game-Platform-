@@ -16,10 +16,10 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@RedisHash(value = "TestRedis")
+@RedisHash(value = "TestRedis", timeToLive = 60)
 public class TestRedisHash implements IRedisHash, Serializable {
     @Id
-    private Long id;
+    private String id;
     @Indexed
     private String name;
     @Indexed

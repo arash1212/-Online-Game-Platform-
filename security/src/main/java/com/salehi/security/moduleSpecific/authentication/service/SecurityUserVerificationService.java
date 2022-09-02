@@ -34,7 +34,6 @@ public class SecurityUserVerificationService {
         this.messagingProviderManager = messagingProviderManager;
     }
 
-    //TODO bayad login bashe
     public Integer requestOtp() {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         UsersOutput usersOutput = this.usersService.findByUsername(username);
@@ -46,7 +45,6 @@ public class SecurityUserVerificationService {
         return otp.getOtp();
     }
 
-    //TODO bayad login bashe
     public boolean verifyMobile(SecurityUserMobileVerificationInput input) {
         String loggedInUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         if (loggedInUser == null)
