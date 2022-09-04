@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class SecurityUserMobileVerificationInput {
+public class SecurityUserVerificationInput {
     @NotNull
     @Schema(description = "Input Generated Otp Value", example = "1234")
     private Integer otp;

@@ -93,7 +93,7 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
                 result.add(hash.values().stream().findFirst().orElse(null));
             }
         }
-        return result.get(0) != null ? result.get(0) : null;
+        return result.size() > 0 ? result.get(0) : null;
     }
 
     public List<T> getAll() {

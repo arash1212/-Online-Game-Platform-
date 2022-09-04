@@ -1,6 +1,6 @@
-package com.salehi.security.model.mobileOtp.repository;
+package com.salehi.security.model.otp.repository;
 
-import com.salehi.datasource.redis.hash.security.SecurityMobileOtpHash;
+import com.salehi.datasource.redis.hash.security.SecurityOtpRedisHash;
 import com.salehi.datasource.redis.repository.RedisRepositoryImpl;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
  * @since 0.0.1
  */
 @Repository
-public class SecurityMobileOtpRepository extends RedisRepositoryImpl<SecurityMobileOtpHash> {
+public class SecurityOtpRepository extends RedisRepositoryImpl<SecurityOtpRedisHash> {
     @Override
     public String getHashName() {
-        return "SECURITY_MOBILE_OTP";
+        return "SECURITY_OTP";
     }
 }

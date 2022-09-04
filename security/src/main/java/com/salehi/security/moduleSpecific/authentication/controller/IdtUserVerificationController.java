@@ -1,6 +1,7 @@
 package com.salehi.security.moduleSpecific.authentication.controller;
 
-import com.salehi.security.moduleSpecific.authentication.dto.userVerification.SecurityUserMobileVerificationInput;
+import com.salehi.security.model.otp.dto.SecurityOtpInput;
+import com.salehi.security.moduleSpecific.authentication.dto.userVerification.SecurityUserVerificationInput;
 import com.salehi.security.moduleSpecific.authentication.service.SecurityUserVerificationService;
 import com.salehi.utility.constant.RestControllerConstant;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,25 +35,25 @@ public class IdtUserVerificationController {
     @Autowired
     private SecurityUserVerificationService securityUserVerificationService;
 
-    @Operation(summary = "Request Mobile Verification Code")
+    @Operation(summary = "Request Verification Code")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Resource Created Successfully"),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))
     })
-    @PostMapping(path = "/request-otp")
-    public void requestOtp() {
-        this.securityUserVerificationService.requestOtp();
+    @PostMapping(path = "/otp/send")
+    public void requestOtp(@Valid @RequestBody SecurityOtpInput input) {
+        this.securityUserVerificationService.sendOtp(input);
     }
 
-    @Operation(summary = "Verify User Mobile")
+    @Operation(summary = "Verify User Mobile/Email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Resource Created Successfully"),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Wrong Otp input", content = @Content(schema = @Schema()))
     })
-    @PostMapping(path = "/verify-mobile")
-    public ResponseEntity<Boolean> verifyMobile(@Valid @RequestBody SecurityUserMobileVerificationInput input) {
+    @PostMapping(path = "/verify")
+    public ResponseEntity<Boolean> verifyMobile(@Valid @RequestBody SecurityUserVerificationInput input) {
         return ResponseEntity.ok(this.securityUserVerificationService.verifyMobile(input));
     }
 }

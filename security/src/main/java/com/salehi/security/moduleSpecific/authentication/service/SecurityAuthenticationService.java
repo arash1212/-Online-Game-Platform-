@@ -1,6 +1,7 @@
 package com.salehi.security.moduleSpecific.authentication.service;
 
 import com.salehi.datasource.relational.entity.user.UsersEntity;
+import com.salehi.security.model.otp.dto.SecurityOtpInput;
 import com.salehi.security.moduleSpecific.authentication.dto.jwt.SecurityJwtInput;
 import com.salehi.security.moduleSpecific.authentication.dto.jwt.SecurityJwtOutput;
 import com.salehi.user.model.user.repository.UsersRepository;
@@ -37,8 +38,8 @@ public class SecurityAuthenticationService {
     }
 
     //TODO
-    public void authOtp() {
-        this.userVerificationService.requestOtp();
+    public void authOtp(SecurityOtpInput input) {
+        this.userVerificationService.sendOtp(input);
     }
 
 }

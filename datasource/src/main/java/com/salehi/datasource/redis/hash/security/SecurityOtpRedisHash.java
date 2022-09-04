@@ -1,6 +1,7 @@
 package com.salehi.datasource.redis.hash.security;
 
 import com.salehi.datasource.redis.interfaces.IRedisHash;
+import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -17,12 +18,14 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@RedisHash(value = "SECURITY_MOBILE_OTP", timeToLive = 60)
-public class SecurityMobileOtpHash implements IRedisHash, Serializable {
+@RedisHash(value = "SECURITY_OTP", timeToLive = 60)
+public class SecurityOtpRedisHash implements IRedisHash, Serializable {
     @Id
     private String id;
     @Indexed
     private String username;
     @Indexed
     private String otp;
+    @Indexed
+    private MessageTypeEnum type;
 }

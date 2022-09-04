@@ -1,10 +1,11 @@
-package com.salehi.security.model.mobileOtp.service;
+package com.salehi.security.model.otp.service;
 
-import com.salehi.datasource.redis.hash.security.SecurityMobileOtpHash;
-import com.salehi.security.model.mobileOtp.dto.SecurityMobileOtpInput;
-import com.salehi.security.model.mobileOtp.dto.SecurityMobileOtpOut;
-import com.salehi.security.model.mobileOtp.mapper.SecurityMobileOtpMapper;
-import com.salehi.security.model.mobileOtp.repository.SecurityMobileOtpRepository;
+import com.salehi.datasource.redis.hash.security.SecurityOtpRedisHash;
+import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
+import com.salehi.security.model.otp.dto.SecurityOtpInput;
+import com.salehi.security.model.otp.dto.SecurityOtpOutput;
+import com.salehi.security.model.otp.mapper.SecurityOtpMapper;
+import com.salehi.security.model.otp.repository.SecurityOtpRepository;
 import com.salehi.user.model.user.dto.UsersOutput;
 import com.salehi.user.model.user.service.UsersService;
 import com.salehi.utility.utils.interfaces.ISecurityUtils;
@@ -22,22 +23,22 @@ import java.util.stream.Collectors;
  * @since 0.0.1
  */
 @Service
-public class SecurityMobileOtpService {
+public class SecurityOtpService {
 
-    private final SecurityMobileOtpRepository otpRepository;
-    private final SecurityMobileOtpMapper otpMapper;
+    private final SecurityOtpRepository otpRepository;
+    private final SecurityOtpMapper otpMapper;
     private final ISecurityUtils securityUtils;
     private final UsersService usersService;
 
     @Autowired
-    public SecurityMobileOtpService(SecurityMobileOtpRepository otpRepository, SecurityMobileOtpMapper otpMapper, ISecurityUtils securityUtils, UsersService usersService) {
+    public SecurityOtpService(SecurityOtpRepository otpRepository, SecurityOtpMapper otpMapper, ISecurityUtils securityUtils, UsersService usersService) {
         this.otpRepository = otpRepository;
         this.otpMapper = otpMapper;
         this.securityUtils = securityUtils;
         this.usersService = usersService;
     }
 
-    public void create(SecurityMobileOtpInput input) {
+    public void create(SecurityOtpInput input) {
         UsersOutput usersOutput = this.usersService.findByUsername(input.getUsername());
         if (usersOutput == null)
             throw new OpenApiResourceNotFoundException("user : " + input.getUsername());
@@ -45,43 +46,45 @@ public class SecurityMobileOtpService {
         this.otpRepository.createOrReplaceWitIndex(this.otpMapper.mapInputToEntity(input), input.getUsername());
     }
 
-    public SecurityMobileOtpHash findById(Long id) {
-        SecurityMobileOtpHash hash = this.otpRepository.getById(id);
+    public SecurityOtpRedisHash findById(Long id) {
+        SecurityOtpRedisHash hash = this.otpRepository.getById(id);
         if (hash == null)
             throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);
 
         return this.otpRepository.getById(id);
     }
 
-    public List<SecurityMobileOtpOut> findByUsername(String username) {
-        List<SecurityMobileOtpHash> hashes = this.otpRepository.getAllByField("name", username);
+    public List<SecurityOtpOutput> findByUsername(String username) {
+        List<SecurityOtpRedisHash> hashes = this.otpRepository.getAllByField("name", username);
         return hashes.stream().map(this.otpMapper::mapEntityToOutput).collect(Collectors.toList());
     }
 
-    public SecurityMobileOtpOut findByOtp(int otp) {
-        SecurityMobileOtpHash hash = this.otpRepository.getByField("otp", otp);
+    public SecurityOtpOutput findByOtp(int otp) {
+        SecurityOtpRedisHash hash = this.otpRepository.getByField("otp", otp);
         return this.otpMapper.mapEntityToOutput(hash);
     }
 
     public void delete(Long id) {
-        SecurityMobileOtpHash hash = this.otpRepository.getById(id);
+        SecurityOtpRedisHash hash = this.otpRepository.getById(id);
         if (hash == null)
             throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);
 
         this.otpRepository.delete(hash);
     }
 
-    public SecurityMobileOtpOut generateOtp(String username) {
-        SecurityMobileOtpHash otpHash = this.getOtpHash(username);
+    public SecurityOtpOutput generateOtp(String username, MessageTypeEnum type) {
+        SecurityOtpRedisHash otpHash = this.getOtpHash(username, type);
         this.otpRepository.createOrReplaceWitIndex(otpHash, username);
         return this.otpMapper.mapEntityToOutput(otpHash);
     }
 
-    private SecurityMobileOtpHash getOtpHash(String username) {
+    //TODO
+    private SecurityOtpRedisHash getOtpHash(String username, MessageTypeEnum type) {
         String generatedOtp = this.securityUtils.generateOTP();
-        SecurityMobileOtpHash otpHash = new SecurityMobileOtpHash();
+        SecurityOtpRedisHash otpHash = new SecurityOtpRedisHash();
         otpHash.setUsername(username);
         otpHash.setOtp(generatedOtp);
+        otpHash.setType(type);
         return otpHash;
     }
 }

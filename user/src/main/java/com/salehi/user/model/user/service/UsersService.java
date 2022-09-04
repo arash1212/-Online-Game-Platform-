@@ -91,4 +91,12 @@ public class UsersService {
         this.usersRepository.update(entity);
     }
 
+    public void updateEmailConfirmationDate(String email) {
+        UsersEntity entity = this.usersRepository.getByEmail(email);
+        if (entity == null)
+            throw new OpenApiResourceNotFoundException("User email : " + email);
+        entity.setEmailConfirmationDate(ZonedDateTime.now());
+        this.usersRepository.update(entity);
+    }
+
 }

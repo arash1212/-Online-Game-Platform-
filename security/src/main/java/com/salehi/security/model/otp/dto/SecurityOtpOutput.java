@@ -1,5 +1,6 @@
-package com.salehi.security.model.mobileOtp.dto;
+package com.salehi.security.model.otp.dto;
 
+import com.salehi.datasource.relational.enums.messaging.MessageTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +12,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SecurityMobileOtpOut {
+public class SecurityOtpOutput {
     private String id;
     private String username;
     private Integer otp;
+    private MessageTypeEnum type;
 }

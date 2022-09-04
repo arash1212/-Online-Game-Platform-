@@ -1,5 +1,6 @@
 package com.salehi.security.moduleSpecific.authentication.controller;
 
+import com.salehi.security.model.otp.dto.SecurityOtpInput;
 import com.salehi.security.moduleSpecific.authentication.dto.jwt.SecurityJwtInput;
 import com.salehi.security.moduleSpecific.authentication.dto.jwt.SecurityJwtOutput;
 import com.salehi.security.moduleSpecific.authentication.service.SecurityAuthenticationService;
@@ -48,8 +49,8 @@ public class PubSecurityAuthenticationController {
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))
     })
     @PostMapping(path = "/request-otp")
-    public ResponseEntity<String> requestOtp() {
-        this.securityAuthenticationService.authOtp();
+    public ResponseEntity<String> requestOtp(@Valid @RequestBody SecurityOtpInput input) {
+        this.securityAuthenticationService.authOtp(input);
         return ResponseEntity.ok("test");
     }
 }

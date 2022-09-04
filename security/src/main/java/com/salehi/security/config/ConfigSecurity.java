@@ -47,6 +47,7 @@ public class ConfigSecurity {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(RestControllerConstant.PUB + "/**").permitAll().and()
                 .authorizeRequests().antMatchers(RestControllerConstant.ADM + "/**").authenticated().and()
+                .authorizeRequests().antMatchers(RestControllerConstant.IDT + "/**").authenticated().and()
                 .authorizeRequests().antMatchers(RestControllerConstant.SWAGGER_DOC + "/**").permitAll().and()
                 .authorizeRequests().anyRequest().authenticated();
 
