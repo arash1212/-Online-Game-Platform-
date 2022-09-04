@@ -1,5 +1,6 @@
 package com.salehi.security.moduleSpecific.authentication.dto.jwt;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,9 @@ import javax.validation.constraints.NotBlank;
 public class SecurityJwtInput {
     @Email
     @NotBlank
+    @Schema(description = "User Email For Authentication", example = "arashsalehi867@yahoo.com")
     private String email;
     @NotBlank
+    @Schema(description = "User Password For Authentication", example = "123456")
     private String password;
 }

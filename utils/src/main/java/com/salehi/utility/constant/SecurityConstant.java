@@ -7,5 +7,5 @@ package com.salehi.utility.constant;
  * @since 0.0.1
  */
 public interface SecurityConstant {
-    String OTP_SIZE = "id";
+    int OTP_SIZE = 4;
 }

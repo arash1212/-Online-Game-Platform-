@@ -60,16 +60,7 @@ public class PubUsersController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
     })
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> create(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(schema = @Schema(example = "{\n" +
-                            "  \"email\": \"arashsalehi867@yahoo.com\",\n" +
-                            "  \"mobile\": \"09001112222\",\n" +
-                            "  \"password\": \"123456\",\n" +
-                            "  \"accountName\": \"arash111\"\n" +
-                            "}"))
-            )
-            @RequestBody UsersInput input) {
+    public ResponseEntity<Long> create(@Valid @RequestBody UsersInput input) {
         return ResponseEntity.ok(this.usersService.save(input));
     }
 
@@ -79,16 +70,7 @@ public class PubUsersController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@PathVariable(name = PathVariableConstant.ID) Long id,
-                       @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
-                               schema = @Schema(example = "{\n" +
-                                       "  \"email\": \"arashsalehi867@yahoo.com\",\n" +
-                                       "  \"mobile\": \"09001234321\",\n" +
-                                       "  \"password\": \"654321\",\n" +
-                                       "  \"accountName\": \"arash321\"\n" +
-                                       "}")
-                       ))
-                       @RequestBody UsersInput input) {
+    public void update(@PathVariable(name = PathVariableConstant.ID) Long id, @Valid @RequestBody UsersInput input) {
         this.usersService.update(id, input);
     }
 

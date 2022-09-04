@@ -71,7 +71,6 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         this.createIndexes(t, uniqueField);
     }
 
-    //todo az hashset ham hazf beshe
     public void delete(T t) {
         String key = this.getHashName() + ":" + t.getId();
         this.removeIndexes(t, t.getId());

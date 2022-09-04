@@ -46,16 +46,7 @@ public class PubTestRedisController {
             @ApiResponse(responseCode = "200", description = "Resource Created Successfully"),
     })
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(schema = @Schema(
-                            example = "{\n" +
-                                    "  \"name\": \"arash\",\n" +
-                                    "  \"score\": 15\n" +
-                                    "}"
-                    ))
-            )
-            @RequestBody TestRedisInput input, BindingResult result) {
+    public void create(@Valid @RequestBody TestRedisInput input, BindingResult result) {
         this.testRedisService.create(input);
     }
 

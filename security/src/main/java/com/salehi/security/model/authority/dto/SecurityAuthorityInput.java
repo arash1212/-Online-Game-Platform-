@@ -1,5 +1,6 @@
 package com.salehi.security.model.authority.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +17,6 @@ import javax.validation.constraints.Size;
 public class SecurityAuthorityInput {
     @NotBlank
     @Size(max = 100)
+    @Schema(example = "Admin")
     private String authority;
 }

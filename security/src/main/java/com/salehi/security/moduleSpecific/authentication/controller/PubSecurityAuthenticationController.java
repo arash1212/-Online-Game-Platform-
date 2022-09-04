@@ -37,15 +37,7 @@ public class PubSecurityAuthenticationController {
 
     @Operation(summary = "Jwt Authentication")
     @PostMapping(path = "/jwt", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SecurityJwtOutput> jwt(@Valid
-                                                 @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                         content = @Content(
-                                                                 schema = @Schema(example =
-                                                                         "{\n" +
-                                                                                 "  \"email\": \"arashsalehi867@yahoo.com\",\n" +
-                                                                                 "  \"password\": \"123456\"\n" +
-                                                                                 "}"))
-                                                 ) @RequestBody SecurityJwtInput input) {
+    public ResponseEntity<SecurityJwtOutput> jwt(@Valid @RequestBody SecurityJwtInput input) {
         return ResponseEntity.ok(this.securityAuthenticationService.authJwt(input));
     }
 

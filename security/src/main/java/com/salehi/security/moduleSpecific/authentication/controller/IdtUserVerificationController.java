@@ -52,16 +52,7 @@ public class IdtUserVerificationController {
             @ApiResponse(responseCode = "404", description = "Wrong Otp input", content = @Content(schema = @Schema()))
     })
     @PostMapping(path = "/verify-mobile")
-    public ResponseEntity<Boolean> verifyMobile(@Valid
-                                                @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                        content = @Content(
-                                                                schema = @Schema(
-                                                                        example = "{\n" +
-                                                                                "  \"otp\": 1234\n" +
-                                                                                "}"
-                                                                ))
-                                                )
-                                                @RequestBody SecurityUserMobileVerificationInput input) {
+    public ResponseEntity<Boolean> verifyMobile(@Valid @RequestBody SecurityUserMobileVerificationInput input) {
         return ResponseEntity.ok(this.securityUserVerificationService.verifyMobile(input));
     }
 }

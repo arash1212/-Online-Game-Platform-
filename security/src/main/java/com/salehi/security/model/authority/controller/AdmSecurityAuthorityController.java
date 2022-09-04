@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -62,14 +61,7 @@ public class AdmSecurityAuthorityController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
     })
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> create(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(schema = @Schema(example =
-                            "{" +
-                                    "  \"authority\": \"user\"\n" +
-                                    "}"))
-            )
-            @RequestBody SecurityAuthorityInput input, BindingResult result) {
+    public ResponseEntity<Long> create(@Valid @RequestBody SecurityAuthorityInput input, BindingResult result) {
         return ResponseEntity.ok(this.authorityService.save(input));
     }
 
@@ -80,13 +72,7 @@ public class AdmSecurityAuthorityController {
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@PathVariable(name = PathVariableConstant.ID) Long id,
-                       @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                               content = @Content(schema = @Schema(example =
-                                       "{" +
-                                               "  \"authority\": \"admin\"\n" +
-                                               "}"))
-                       )
-                       @RequestBody SecurityAuthorityInput input, BindingResult result) {
+                       @Valid @RequestBody SecurityAuthorityInput input, BindingResult result) {
         this.authorityService.update(id, input);
     }
 

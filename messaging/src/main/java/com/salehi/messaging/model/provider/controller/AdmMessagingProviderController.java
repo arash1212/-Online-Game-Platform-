@@ -61,24 +61,7 @@ public class AdmMessagingProviderController {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema())),
     })
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> create(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(schema = @Schema(example =
-                            "{\n" +
-                                    "\"title\": \"سرویس پیامک پارس گرین\",\n" +
-                                    "  \"description\": \"سرویس پیامک پارس گرین\",\n" +
-                                    "  \"serviceUrl\": \"https://sms.parsgreen.ir/Apiv2/Message/SendSms\",\n" +
-                                    "  \"port\": null,\n" +
-                                    "  \"tokenHeaderName\": \"Authorization\",\n" +
-                                    "  \"serviceToken\": \"token..\",\n" +
-                                    "  \"username\": \"null\",\n" +
-                                    "  \"password\": \"null\",\n" +
-                                    "  \"supportedType\": \"SMS\",\n" +
-                                    "  \"provider\": \"PARS_GREEN\"" +
-                                    "}"
-                    ))
-            )
-            @RequestBody MessagingProviderInput input, BindingResult result) {
+    public ResponseEntity<Long> create(@Valid @RequestBody MessagingProviderInput input, BindingResult result) {
         return ResponseEntity.ok(this.providerService.save(input));
     }
 
@@ -89,23 +72,7 @@ public class AdmMessagingProviderController {
             @ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema()))})
     @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@PathVariable(name = PathVariableConstant.ID) Long id,
-                       @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                               content = @Content(schema = @Schema(example =
-                                       "{\n" +
-                                               "\"title\": \"سرویس جیمیل\",\n" +
-                                               "  \"description\": \"سرویس جیمیل\",\n" +
-                                               "  \"serviceUrl\": \"smtp.gmail.com\",\n" +
-                                               "  \"port\": 587,\n" +
-                                               "  \"tokenHeaderName\": \"null\",\n" +
-                                               "  \"serviceToken\": \"null\",\n" +
-                                               "  \"username\": \"username..\",\n" +
-                                               "  \"password\": \"pass..\",\n" +
-                                               "  \"supportedType\": \"EMAIL\",\n" +
-                                               "  \"provider\": \"GMAIL\"" +
-                                               "}"
-                               ))
-                       )
-                       @RequestBody MessagingProviderInput input, BindingResult result) {
+                       @Valid @RequestBody MessagingProviderInput input, BindingResult result) {
         this.providerService.update(id, input);
     }
 
