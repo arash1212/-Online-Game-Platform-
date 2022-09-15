@@ -14,8 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author Arash Salehi
@@ -23,7 +24,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
  * @since 0.0.1
  */
 @Configuration
-public class ConfigSecurity {
+@EnableWebMvc
+public class ConfigSecurity implements WebMvcConfigurer {
 
     @Autowired
     private AuthenticationConfiguration configuration;
@@ -60,4 +62,10 @@ public class ConfigSecurity {
     AuthenticationManager authenticationManager() throws Exception {
         return configuration.getAuthenticationManager();
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
 }
