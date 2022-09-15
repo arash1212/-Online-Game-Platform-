@@ -1,0 +1,13 @@
+.input {
+    float: right;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgb(79, 75, 90);
+}
+
+.input-label {
+    float: right;
+    font-size:medium;
+    color: rgb(207, 211, 195);
+}

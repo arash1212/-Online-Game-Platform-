@@ -3,18 +3,22 @@ import './Header.css'
 export default function Header() {
     const menuItems = [
         {
+            id: 1,
             value: "فروشگاه",
             link: "."
         },
         {
+            id: 2,
             value: "بخش اجتماعی",
             link: "."
         },
         {
+            id: 3,
             value: "درباره ما",
             link: "."
         },
         {
+            id: 4,
             value: "پشتیبانی",
             link: "."
         }
@@ -29,7 +33,7 @@ export default function Header() {
                 {
                     menuItems.map((item) => {
                         return (
-                            <li className='nav-link'>
+                            <li key={item.id} className='nav-link'>
                                 <a href={item.link}>{item.value}</a>
                             </li>
                         )

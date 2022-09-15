@@ -1,0 +1,14 @@
+.confirm-btn-main {
+    float: right;
+    width: 160px;
+    height: 40px;
+    color: white;
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, rgb(178, 202, 230), rgb(61, 120, 143));
+}
+
+.confirm-btn-main:hover {
+    background-image: linear-gradient(to right, rgb(142, 191, 240), rgb(142, 207, 240));
+}
