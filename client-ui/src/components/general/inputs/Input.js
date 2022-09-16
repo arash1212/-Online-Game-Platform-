@@ -1,18 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import './Input.css'
 
 export default function Input(props) {
-    const [value, setValue] = useState('');
-
-
     const styles = {
         marginBottom: props.bottom,
         width: props.width
-    }
-
-    function onChangeHandler(e) {
-        setValue(e.target.value);
     }
 
     return (

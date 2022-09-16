@@ -24,8 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since 0.0.1
  */
 @Configuration
-@EnableWebMvc
-public class ConfigSecurity implements WebMvcConfigurer {
+public class ConfigSecurity {
 
     @Autowired
     private AuthenticationConfiguration configuration;
@@ -63,9 +62,15 @@ public class ConfigSecurity implements WebMvcConfigurer {
         return configuration.getAuthenticationManager();
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000")
+                        .allowedMethods("*");
+            }
+        };
     }
-
 }

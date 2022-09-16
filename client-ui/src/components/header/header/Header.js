@@ -40,6 +40,12 @@ export default function Header() {
                     })
                 }
             </ul>
+
+            <div className='login-div'>
+                <a className='login-div-item' href='/login'> ورود </a>
+                <span className='login-div-item'> | </span>
+                <a className='login-div-item' href='/user-register'> ثبت نام تست </a>
+            </div>
         </div>
     )
 }
