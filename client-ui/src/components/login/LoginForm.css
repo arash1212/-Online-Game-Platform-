@@ -2,18 +2,18 @@
     float: right;
     color: white;
     margin-top: 7%;
-    margin-right: 40%;
+    margin-right: 36%;
 }
 
 .user-login-main {
     float: right;
+    padding: 50px;
     margin-top: 1%;
     margin-right: 35%;
     background-color: rgb(24, 26, 27);
-    padding: 50px;
 }
 
 .user-login-main h1 {
     color: white;
-    margin-right: 55%;
+    margin-right: 60%;
 }

@@ -3,7 +3,7 @@ import ConfirmButton from "../general/buttons/ConfirmButton";
 import Input from "../general/inputs/Input"
 import './UserRegisterForm.css'
 
-export default function RegisterForm(props) {
+export default function UserRegisterForm(props) {
     const marginBottom = '45px';
     const width = '290px';
 
@@ -42,6 +42,7 @@ export default function RegisterForm(props) {
     return (
         <div className="user-register-main">
             <h1>ایجاد حساب کاربری جدید</h1><br />
+
             <form onSubmit={e => handlePost(e)}>
                 {console.log(postObject)}
                 <Input
@@ -53,7 +54,6 @@ export default function RegisterForm(props) {
                     bottom={marginBottom}
                     setValue={setEmail}
                 />
-                <br />
 
                 <Input
                     id='mobile'
@@ -64,7 +64,6 @@ export default function RegisterForm(props) {
                     bottom={marginBottom}
                     setValue={setMobile}
                 />
-                <br />
 
                 <Input
                     id='accountName'
@@ -75,7 +74,6 @@ export default function RegisterForm(props) {
                     bottom={marginBottom}
                     setValue={setAccountName}
                 />
-                <br />
 
                 <Input
                     id='password'
@@ -86,7 +84,6 @@ export default function RegisterForm(props) {
                     bottom={marginBottom}
                     setValue={setPassword}
                 />
-                <br />
 
                 <Input
                     id='password-repeat'
@@ -97,10 +94,11 @@ export default function RegisterForm(props) {
                     bottom={marginBottom}
                     setValue={setPasswordRepeat}
                 />
-                <br />
 
                 <ConfirmButton value='ثبت نام' handleClick={checkPassword} />
             </form>
         </div>
+
+        
     )
 }

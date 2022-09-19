@@ -1,8 +1,14 @@
+@font-face {
+  font-family: iranian-sans;
+  src: url(../public/fonts/Shabnam-Light.ttf);
+}
+
 body {
   margin: 0;
+  font-family: iranian-sans;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: iranian-sans,
     monospace;
 }

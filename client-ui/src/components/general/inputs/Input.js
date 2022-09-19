@@ -12,7 +12,8 @@ export default function Input(props) {
             <label
                 htmlFor={props.id}
                 className="input-label">{props.label}
-            </label><br />
+            </label>
+            <br />
 
             <input className="input"
                 id={props.id}
@@ -21,6 +22,7 @@ export default function Input(props) {
                 onChange={e => props.setValue(e.target.value)}
                 style={styles}
             />
+            <br />
         </>
     )
 }

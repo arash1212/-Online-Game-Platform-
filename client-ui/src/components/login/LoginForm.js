@@ -2,33 +2,32 @@ import { useState } from 'react';
 import './LoginForm.css'
 import Input from '../general/inputs/Input'
 import ConfirmButton from '../general/buttons/ConfirmButton';
+import SetCookie from '../../scripts/CookieUtils'
+
+import { Post } from '../../scripts/RestClientUtils'
 
 export default function LoginForm(props) {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const marginBottom = '15px';
     const width = '450px';
     const btnWidth = '350px';
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     let postObject = {
         email: email,
         password: password
     }
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postObject)
-    };
+    let response = {
+        token: '',
+    }
 
-    function handlePost(e) {
+    async function handlePost(e) {
         e.preventDefault();
-        console.log(JSON.stringify(postObject));
-        fetch('http://localhost:8080/api/pub/auth/jwt', requestOptions)
-            .then(response => response.json())
-            .then(result => console.log(result));
+        response = await Post('http://localhost:8080/api/pub/auth/jwt', postObject);
+        SetCookie('store-jwt-token', response.token, 60);
     }
 
     return (
@@ -44,7 +43,7 @@ export default function LoginForm(props) {
                         width={width}
                         bottom={marginBottom}
                         setValue={setEmail}
-                    /><br />
+                    />
 
                     <Input
                         id='password'
@@ -55,7 +54,6 @@ export default function LoginForm(props) {
                         bottom={marginBottom}
                         setValue={setPassword}
                     />
-                    <br />
 
                     <ConfirmButton
                         value='ورود'
