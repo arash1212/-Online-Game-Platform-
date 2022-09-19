@@ -2,6 +2,7 @@ import { useState } from "react";
 import ConfirmButton from "../general/buttons/ConfirmButton";
 import Input from "../general/inputs/Input"
 import './UserRegisterForm.css'
+import { Post } from '../../scripts/RestClientUtils'
 
 export default function UserRegisterForm(props) {
     const marginBottom = '45px';
@@ -12,7 +13,6 @@ export default function UserRegisterForm(props) {
     const [accountName, setAccountName] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
-
 
     let postObject = {
         email: email,
@@ -27,16 +27,9 @@ export default function UserRegisterForm(props) {
         }
     }
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postObject)
-    };
-
     function handlePost(e) {
         e.preventDefault();
-        fetch('http://localhost:8080/api/pub/users', requestOptions)
-            .then(response => response.json());
+        Post('http://localhost:8080/api/pub/users', postObject);
     }
 
     return (
@@ -99,6 +92,6 @@ export default function UserRegisterForm(props) {
             </form>
         </div>
 
-        
+
     )
 }
