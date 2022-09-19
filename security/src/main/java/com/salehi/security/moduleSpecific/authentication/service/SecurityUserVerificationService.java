@@ -39,9 +39,12 @@ public class SecurityUserVerificationService {
 
     //TODO
     public Integer sendOtp(SecurityOtpInput input) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        UsersOutput usersOutput = this.usersService.findByUsername(username);
-        SecurityOtpOutput otp = this.securityOtpService.generateOtp(username, input.getType());
+//        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        UsersOutput usersOutput = this.usersService.findByUsername(input.getUsername());
+        if (usersOutput == null)
+            throw new OpenApiResourceNotFoundException("username : " + input.getUsername());
+
+        SecurityOtpOutput otp = this.securityOtpService.generateOtp(input.getUsername(), input.getType());
 
         if (input.getType().equals(MessageTypeEnum.SMS)) {
             MessagingSmsInput smsInput = this.getOtpSmsInput(usersOutput, otp);

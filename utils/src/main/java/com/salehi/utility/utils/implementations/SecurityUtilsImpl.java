@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityUtilsImpl implements ISecurityUtils {
     public String generateOTP() {
-        int otp = (int) (Math.random() * 9000) + 1000;
+        int otp = (int) (Math.random() * 9000) + 100000;
         return String.valueOf(otp);
     }
 }

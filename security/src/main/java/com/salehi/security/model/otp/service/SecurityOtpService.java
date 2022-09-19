@@ -13,9 +13,6 @@ import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author Arash Salehi
  * @author arashsalehi849@yahoo.com
@@ -43,24 +40,24 @@ public class SecurityOtpService {
         if (usersOutput == null)
             throw new OpenApiResourceNotFoundException("user : " + input.getUsername());
 
-        this.otpRepository.createOrReplaceWitIndex(this.otpMapper.mapInputToEntity(input), input.getUsername());
+        this.otpRepository.createKeyValue(input.getUsername(), this.otpMapper.mapInputToEntity(input));
     }
 
-    public SecurityOtpRedisHash findById(Long id) {
-        SecurityOtpRedisHash hash = this.otpRepository.getById(id);
-        if (hash == null)
-            throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);
+//    public SecurityOtpRedisHash findById(Long id) {
+//        SecurityOtpRedisHash hash = this.otpRepository.getById(id);
+//        if (hash == null)
+//            throw new OpenApiResourceNotFoundException("RedisTest ID : " + id);
+//
+//        return this.otpRepository.getById(id);
+//    }
 
-        return this.otpRepository.getById(id);
-    }
-
-    public List<SecurityOtpOutput> findByUsername(String username) {
-        List<SecurityOtpRedisHash> hashes = this.otpRepository.getAllByField("name", username);
-        return hashes.stream().map(this.otpMapper::mapEntityToOutput).collect(Collectors.toList());
+    public SecurityOtpOutput findByUsername(String username) {
+        SecurityOtpRedisHash otp = this.otpRepository.getByKey(username);
+        return this.otpMapper.mapEntityToOutput(otp);
     }
 
     public SecurityOtpOutput findByOtp(int otp) {
-        SecurityOtpRedisHash hash = this.otpRepository.getByField("otp", otp);
+        SecurityOtpRedisHash hash = this.otpRepository.getByKey(otp);
         return this.otpMapper.mapEntityToOutput(hash);
     }
 
@@ -74,7 +71,7 @@ public class SecurityOtpService {
 
     public SecurityOtpOutput generateOtp(String username, MessageTypeEnum type) {
         SecurityOtpRedisHash otpHash = this.getOtpHash(username, type);
-        this.otpRepository.createOrReplaceWitIndex(otpHash, username);
+        this.otpRepository.createKeyValue(otpHash.getOtp(), otpHash);
         return this.otpMapper.mapEntityToOutput(otpHash);
     }
 

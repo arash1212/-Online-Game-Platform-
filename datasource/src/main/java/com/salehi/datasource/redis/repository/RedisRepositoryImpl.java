@@ -33,13 +33,21 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         throw new UnsupportedOperationException();
     }
 
+    //Key / value without index
+    public void createKeyValue(String hashKey, T t) {
+//        this.addKeyToHashSet(key);
+        String key = this.getHashName() + ":" + hashKey;
+        this.hashOperations.put(key, hashKey, t);
+        this.setExpireTime(t, key);
+    }
+
     public void create(T t) {
         String id = String.valueOf(this.generateId());
         t.setId(id);
         String key = this.getHashName() + ":" + t.getId();
         this.addKeyToHashSet(id);
-        this.setExpireTime(t, key);
         this.hashOperations.put(key, t.getId(), t);
+        this.setExpireTime(t, key);
     }
 
     public void createOrReplace(T t, Object uniqueField) {
@@ -47,8 +55,8 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         t.setId(id);
         String key = this.getHashName() + ":" + uniqueField;
         this.addKeyToHashSet(id);
-        this.setExpireTime(t, key);
         this.hashOperations.put(key, id, t);
+        this.setExpireTime(t, key);
     }
 
     public void createWithIndex(T t) {
@@ -76,6 +84,11 @@ public class RedisRepositoryImpl<T extends IRedisHash> {
         this.removeIndexes(t, t.getId());
         this.redisTemplate.delete(key);
         this.removeKeyFromHashSet(t.getId());
+    }
+
+    public T getByKey(Object hashKey) {
+        String key = this.getHashName() + ":" + hashKey;
+        return hashOperations.entries(key).values().stream().findFirst().orElse(null);
     }
 
     public T getById(Long id) {
