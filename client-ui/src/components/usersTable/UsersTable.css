@@ -1,0 +1,11 @@
+.users-table-main {
+    margin-top: 70px;
+}
+
+button {
+    float: right;
+}
+
+table {
+    direction: rtl;
+}
