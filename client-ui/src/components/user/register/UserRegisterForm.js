@@ -1,8 +1,8 @@
 import { useState } from "react";
-import ConfirmButton from "../general/buttons/ConfirmButton";
-import Input from "../general/inputs/Input"
+import UsersService from "../../../service/user/UsersService";
+import ConfirmButton from "../../general/buttons/ConfirmButton";
+import Input from "../../general/inputs/Input"
 import './UserRegisterForm.css'
-import { Post } from '../../scripts/RestClientUtils'
 
 export default function UserRegisterForm(props) {
     const marginBottom = '45px';
@@ -14,7 +14,7 @@ export default function UserRegisterForm(props) {
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
 
-    let postObject = {
+    let postData = {
         email: email,
         mobile: mobile,
         accountName: accountName,
@@ -29,7 +29,9 @@ export default function UserRegisterForm(props) {
 
     function handlePost(e) {
         e.preventDefault();
-        Post('http://localhost:8080/api/pub/users', postObject);
+        UsersService.create(postData)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
 
     return (
@@ -37,7 +39,7 @@ export default function UserRegisterForm(props) {
             <h1>ایجاد حساب کاربری جدید</h1><br />
 
             <form onSubmit={e => handlePost(e)}>
-                {console.log(postObject)}
+                {console.log(postData)}
                 <Input
                     id='email'
                     type='text'

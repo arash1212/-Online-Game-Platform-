@@ -1,33 +1,31 @@
 import { useState } from 'react';
 import './LoginForm.css'
-import Input from '../general/inputs/Input'
-import ConfirmButton from '../general/buttons/ConfirmButton';
-import SetCookie from '../../scripts/CookieUtils'
-
-import { Post } from '../../scripts/RestClientUtils'
+import Input from '../../general/inputs/Input'
+import ConfirmButton from '../../general/buttons/ConfirmButton';
+import SetCookie from '../../../scripts/CookieUtils'
+import { loginJwt } from '../../../service/security/SecurityAuthenticationService';
 
 export default function LoginForm(props) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [token, setToken] = useState('');
 
     const marginBottom = '15px';
     const width = '450px';
     const btnWidth = '350px';
 
-    let postObject = {
+    let postData = {
         email: email,
         password: password
     }
 
-    let response = {
-        token: '',
-    }
-
     async function handlePost(e) {
         e.preventDefault();
-        response = await Post('http://localhost:8080/api/pub/auth/jwt', postObject);
-        SetCookie('store-jwt-token', response.token, 60);
+        loginJwt(postData).then(response => {
+            setToken(response.data);
+        }).catch(error => console.log(error));
+        SetCookie('store-jwt-token', token.token, 60);
     }
 
     return (

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Get } from '../../scripts/RestClientUtils'
-import Table from '../general/table/Table';
+import UsersService from '../../../service/user/UsersService';
+import Table from '../../general/table/Table';
 import './UsersTable.css'
 
 export default function UsersTable(props) {
@@ -8,10 +8,10 @@ export default function UsersTable(props) {
     const [tableData, setTableData] = useState([]);
 
     async function getTableData() {
-        let reponse = await Get('http://localhost:8080/api/pub/users');
-        setTableData(reponse);
-        return reponse;
-
+        UsersService.findAll()
+            .then(response => {
+                setTableData(response.data);
+            }).catch(error => console.log(error));
     }
 
     let tableHeadData = [
