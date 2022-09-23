@@ -56,8 +56,8 @@ public class GenericRepositoryImpl<T extends IEntity> implements IGenericReposit
 
     @Transactional
     @Override
-    public void delete(Long id) {
-        entityManager.remove(id);
+    public void delete(T t) {
+        entityManager.remove(t);
     }
 
     @Override

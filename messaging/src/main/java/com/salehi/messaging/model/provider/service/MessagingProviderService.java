@@ -69,7 +69,7 @@ public class MessagingProviderService {
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Provider ID : " + id);
 
-        this.providerRepository.delete(id);
+        this.providerRepository.delete(entity);
     }
 
 }

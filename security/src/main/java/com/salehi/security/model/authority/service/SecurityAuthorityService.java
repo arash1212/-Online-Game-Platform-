@@ -66,7 +66,7 @@ public class SecurityAuthorityService {
         if (entity == null)
             throw new OpenApiResourceNotFoundException("Authority ID : " + id);
 
-        this.authorityRepository.delete(id);
+        this.authorityRepository.delete(entity);
     }
 
 }

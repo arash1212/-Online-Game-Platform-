@@ -1,0 +1,14 @@
+.delete-btn-main {
+    border: none;
+    float: right;
+    width: 60px;
+    height: 40px;
+    color: white;
+    font-size: 17px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, rgb(153, 25, 8), rgb(160, 36, 20));
+}
+
+.delete-btn-main:hover {
+    background-image: linear-gradient(to right, rgb(177, 63, 34), rgb(182, 89, 65));
+}

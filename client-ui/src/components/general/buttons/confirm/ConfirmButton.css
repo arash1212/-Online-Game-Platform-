@@ -6,9 +6,9 @@
     color: white;
     font-size: 17px;
     border-radius: 5px;
-    background-image: linear-gradient(to right, rgb(178, 202, 230), rgb(61, 120, 143));
+    background-image: linear-gradient(to right, rgb(88, 131, 180), rgb(83, 142, 165));
 }
 
 .confirm-btn-main:hover {
-    background-image: linear-gradient(to right, rgb(142, 191, 240), rgb(142, 207, 240));
+    background-image: linear-gradient(to right, rgb(96, 129, 163), rgb(142, 207, 240));
 }

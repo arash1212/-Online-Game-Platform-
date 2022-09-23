@@ -1,6 +1,6 @@
 import { useState } from "react";
-import UsersService from "../../../service/user/UsersService";
-import ConfirmButton from "../../general/buttons/ConfirmButton";
+import { create } from "../../../service/user/UsersService";
+import ConfirmButton from "../../general/buttons/confirm/ConfirmButton";
 import Input from "../../general/inputs/Input"
 import './UserRegisterForm.css'
 
@@ -29,7 +29,7 @@ export default function UserRegisterForm(props) {
 
     function handlePost(e) {
         e.preventDefault();
-        UsersService.create(postData)
+        create(postData)
             .then(response => console.log(response))
             .catch(error => console.log(error));
     }

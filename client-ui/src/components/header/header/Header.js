@@ -21,11 +21,6 @@ export default function Header() {
             id: 4,
             value: "پشتیبانی",
             link: "."
-        },
-        {
-            id: 5,
-            value: "لیست کارابران(تست",
-            link: "/users-list"
         }
     ];
 
@@ -39,7 +34,7 @@ export default function Header() {
                     menuItems.map((item) => {
                         return (
                             <li key={item.id} className='nav-link'>
-                                <a href={item.link}>{item.value}</a>
+                                <a href={item.link}><p>{item.value}</p></a>
                             </li>
                         )
                     })

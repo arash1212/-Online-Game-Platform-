@@ -77,7 +77,7 @@ public class UsersService {
         if (entity == null)
             throw new OpenApiResourceNotFoundException("User ID : " + id);
 
-        this.usersRepository.delete(id);
+        this.usersRepository.delete(entity);
     }
 
     public void updateMobileConfirmationDate(String email) {

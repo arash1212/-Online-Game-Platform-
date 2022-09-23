@@ -1,5 +1,50 @@
 .table-main {
-    width: 90%;
+    width: 78%;
+    min-width: 78%;
     margin: auto;
     color: white;
+    direction: rtl;
+    margin-top: 35px;
+    font-size: 1.1em;
+    overflow: hidden;
+    overflow-x: auto;
+    margin-right: 19%;
+    display: inline-block;
+    border-collapse: collapse;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th {
+    top: 0;
+    position: sticky;
+    padding: 12px 15px;
+}
+
+.table-main thead tr {
+    color: #ffffff;
+    text-align: right;
+    font-weight: bold;
+    background-color: #009879;
+}
+
+.table-main tbody tr,
+.table-main tbody td {
+    padding: 12px 15px;
+}
+
+.table-main tbody tr {
+    border-bottom: 1px solid #a7a0a0;
+}
+
+.table-main tbody tr:hover {
+    background-color: #1d1c1c;
+}
+
+.table-main tbody tr:nth-of-type(even):not(:hover) {
+    background-color: #292828;
+}
+
+.table-main tbody tr:last-of-type {
+    border-bottom: 1px solid #009879;
 }

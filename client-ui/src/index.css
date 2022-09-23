@@ -3,9 +3,10 @@
   src: url(../public/fonts/Shabnam-Light.ttf);
 }
 
-body {
+* {
   margin: 0;
-  font-family: iranian-sans;
+  direction: rtl;
+  font-family: iranian-sans,'Times New Roman', Times, serif;
 }
 
 code {

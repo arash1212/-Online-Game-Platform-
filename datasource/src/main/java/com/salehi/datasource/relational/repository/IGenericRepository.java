@@ -22,7 +22,7 @@ public interface IGenericRepository<T extends IEntity> {
 
     T update(T t);
 
-    void delete(Long id);
+    void delete(T t);
 
     List<Integer> save(List<T> ts);
 

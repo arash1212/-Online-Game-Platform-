@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './LoginForm.css'
 import Input from '../../general/inputs/Input'
-import ConfirmButton from '../../general/buttons/ConfirmButton';
+import ConfirmButton from '../../general/buttons/confirm/ConfirmButton';
 import SetCookie from '../../../scripts/CookieUtils'
 import { loginJwt } from '../../../service/security/SecurityAuthenticationService';
 
@@ -20,7 +20,7 @@ export default function LoginForm(props) {
         password: password
     }
 
-    async function handlePost(e) {
+    function handlePost(e) {
         e.preventDefault();
         loginJwt(postData).then(response => {
             setToken(response.data);
